@@ -3,6 +3,11 @@ export enum AuthType {
   GOOGLE = 'GOOGLE'
 }
 
+export enum UserRole {
+  SURVEYOR = 'SURVEYOR',
+  DEPT_HEAD = 'DEPT_HEAD'
+}
+
 export interface UserPreferences {
   defaultRegion?: string;
   defaultLocationFactor?: number;
@@ -15,11 +20,24 @@ export interface User {
   firstName: string;
   lastName: string;
   role: string;
+  roleType: UserRole; // RBAC integration
   company: string;
+  tenantId: string; // Multi-tenancy isolation
   email: string;
   authType: AuthType;
   avatar?: string;
   preferences?: UserPreferences;
+}
+
+export interface TeamMemberStats {
+  userId: string;
+  name: string;
+  avatar: string;
+  role: string;
+  rcasCompleted: number;
+  totalFeesGenerated: number;
+  lastActive: string;
+  status: 'Online' | 'Offline';
 }
 
 export interface FloorArea {
@@ -135,12 +153,15 @@ export interface Template {
   updatedAt: string;
   isFavourite?: boolean;
   isArchived?: boolean;
+  previewHtml?: string;
+  docBuffer?: ArrayBuffer;
   previewData?: {
     brandColor: string;
     hasLogo: boolean;
     logoPos: 'left' | 'right' | 'center';
     headerTitle: string;
     sections: { title: string; type: 'text' | 'table' | 'chart' }[];
+    mergeFields?: string[];
   };
 }
 
@@ -172,6 +193,10 @@ export interface Development {
   isTemplate?: boolean;
   isFavourite?: boolean;
   isArchived?: boolean;
+  ownerId?: string; // Track creator for analytics
+  ownerName?: string;
+  ownerRole?: string;
+  rcaFee?: number; // Internal fee tracking
 }
 
 export type ViewMode = 'grid' | 'list';
