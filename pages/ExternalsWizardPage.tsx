@@ -186,9 +186,9 @@ const ExternalsWizardPage: React.FC<{
   };
 
   const SectionHeader = ({ id, title, icon: Icon }: { id: string, title: string, icon: React.ReactNode }) => (
-    <div className="flex items-center justify-between mb-10">
-      <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-4">
-        <div className="p-3 bg-emerald-50 text-emerald-600 rounded-2xl shadow-inner">{Icon}</div>
+    <div className="flex items-center justify-between mb-6 sm:mb-10">
+      <h3 className="text-lg sm:text-2xl font-bold text-slate-900 flex items-center gap-3 sm:gap-4">
+        <div className="p-2 sm:p-3 bg-emerald-50 text-emerald-600 rounded-xl sm:rounded-2xl shadow-inner">{Icon}</div>
         {title}
       </h3>
     </div>
@@ -197,21 +197,21 @@ const ExternalsWizardPage: React.FC<{
   return (
     <div className="flex flex-col h-full overflow-hidden bg-slate-50/50 font-inter">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between sticky top-0 z-50 shadow-sm">
-        <div className="flex items-center gap-5">
-          <button onClick={onBack} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-500 border border-slate-200 transition-all"><ChevronLeft size={22} /></button>
-          <div className="flex flex-col"><h2 className="text-xl font-bold text-slate-900 tracking-tight">Externals Assessment</h2><p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">{development.name}</p></div>
+      <div className="bg-white border-b border-slate-200 px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-50 shadow-sm gap-3">
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <button onClick={onBack} className="p-2 sm:p-2.5 hover:bg-slate-100 rounded-xl text-slate-500 border border-slate-200 transition-all shrink-0"><ChevronLeft size={20} /></button>
+          <div className="flex flex-col min-w-0"><h2 className="text-base sm:text-xl font-bold text-slate-900 tracking-tight truncate">Externals Assessment</h2><p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest truncate">{development.name}</p></div>
         </div>
-        <div className="bg-slate-900 px-4 py-2 rounded-xl text-right flex items-center gap-4 shadow-lg shadow-slate-200 transition-all">
-           <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500">Total Externals</p>
-           <p className="text-md font-bold text-emerald-400">£{formatNumber(totalDayOneRCA, 0)}</p>
+        <div className="bg-slate-900 px-3 sm:px-4 py-2 rounded-xl text-right flex items-center gap-2 sm:gap-4 shadow-lg shadow-slate-200 transition-all shrink-0">
+           <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500 hidden sm:block">Total Externals</p>
+           <p className="text-sm sm:text-md font-bold text-emerald-400">£{formatNumber(totalDayOneRCA, 0)}</p>
         </div>
       </div>
 
       {/* Anchor Navigation */}
-      <div className="bg-white border-b border-slate-200 flex overflow-x-auto no-scrollbar scroll-smooth sticky top-[73px] z-40 no-print">
+      <div className="bg-white border-b border-slate-200 flex overflow-x-auto no-scrollbar scroll-smooth sticky top-[57px] sm:top-[73px] z-40 no-print">
         {steps.map((step, idx) => (
-          <button key={idx} onClick={() => scrollToSection(idx)} className={`flex-1 min-w-[90px] px-2 py-4 border-b-4 transition-all flex flex-col items-center justify-center gap-1 group ${activeStep === idx ? 'border-emerald-600 bg-emerald-50/20' : 'border-transparent text-slate-500'}`}>
+          <button key={idx} onClick={() => scrollToSection(idx)} className={`flex-1 min-w-[60px] sm:min-w-[90px] px-2 py-3 sm:py-4 border-b-4 transition-all flex flex-col items-center justify-center gap-1 group ${activeStep === idx ? 'border-emerald-600 bg-emerald-50/20' : 'border-transparent text-slate-500'}`}>
             <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${ activeStep === idx ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-200' : 'bg-slate-100 text-slate-400'}`}>
                {React.cloneElement(step.icon as React.ReactElement<any>, { size: 13 })}
             </div>
@@ -222,7 +222,7 @@ const ExternalsWizardPage: React.FC<{
 
       {/* Delete Selection Overlay */}
       {selectedItems.size > 0 && !isLocked && (
-        <div className="fixed bottom-32 left-[calc(144px+50%)] -translate-x-1/2 z-[100] flex justify-center pointer-events-none no-print">
+        <div className="fixed bottom-8 sm:bottom-32 left-1/2 lg:left-[calc(144px+50%)] -translate-x-1/2 z-[100] flex justify-center pointer-events-none no-print">
           <div className="bg-slate-900 text-white px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-8 animate-in slide-in-from-bottom-4 pointer-events-auto border border-slate-700">
              <div className="flex items-center gap-3"><Trash2 size={18} className="text-emerald-400" /><p className="text-sm font-bold uppercase tracking-widest">{selectedItems.size} Selected</p></div>
              <div className="h-8 w-px bg-white/20" />
@@ -250,13 +250,13 @@ const ExternalsWizardPage: React.FC<{
         </div>
       )}
 
-      <div ref={scrollContainerRef} className="flex-1 overflow-auto custom-scrollbar p-12 space-y-24 pb-32">
+      <div ref={scrollContainerRef} className="flex-1 overflow-auto custom-scrollbar p-4 sm:p-8 md:p-12 space-y-12 sm:space-y-24 pb-32">
         {/* Rate Calibration */}
         <section ref={sectionRefs[0]} className="max-w-3xl mx-auto scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200 space-y-12">
-            <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-4 transition-all"><div className="p-3 bg-blue-50 text-blue-600 rounded-2xl shadow-inner"><TrendingUp size={24} /></div>Rate Calibration</h3>
-            <div className="space-y-10">
-              <div className="grid grid-cols-2 gap-8 items-end">
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200 space-y-8 sm:space-y-12">
+            <h3 className="text-lg sm:text-2xl font-bold text-slate-900 flex items-center gap-3 sm:gap-4 transition-all"><div className="p-2 sm:p-3 bg-blue-50 text-blue-600 rounded-xl sm:rounded-2xl shadow-inner"><TrendingUp size={20} /></div>Rate Calibration</h3>
+            <div className="space-y-8 sm:space-y-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 items-end">
                  <div>
                     <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1">UK Region Factor</label>
                     <div className="relative group/select">
@@ -272,8 +272,8 @@ const ExternalsWizardPage: React.FC<{
                     <NumberInput disabled={isLocked} value={assessment.locationFactor || 1} step={0.01} suffix="%" paddingClass="py-4 px-3" onChange={val => updateExternals({ locationFactor: val })} />
                  </div>
               </div>
-              <div className="grid grid-cols-12 gap-8 items-end pt-6 border-t border-slate-100">
-                <div className="col-span-9">
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-8 items-end pt-6 border-t border-slate-100">
+                <div className="sm:col-span-9">
                   <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1">Spon's Standard Category</label>
                   <div className="relative group/select">
                     <select disabled={isLocked} className="w-full bg-white border border-slate-200 rounded-2xl py-4 px-6 text-sm font-bold text-slate-900 appearance-none outline-none focus:ring-4 focus:ring-blue-500/10 pr-12 transition-all" onChange={(e) => updateExternals({ categoryLabel: e.target.value })} value={currentCategoryLabel}>
@@ -282,8 +282,8 @@ const ExternalsWizardPage: React.FC<{
                     <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
                   </div>
                 </div>
-                <div className="col-span-3">
-                  <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1 text-right">Base Rate</label>
+                <div className="sm:col-span-3">
+                  <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1 sm:text-right">Base Rate</label>
                   <div className="relative group/select">
                     <select disabled={isLocked} className="w-full bg-white border border-slate-200 rounded-2xl py-4 px-6 text-sm font-bold text-slate-900 appearance-none outline-none focus:ring-4 focus:ring-blue-500/10 text-right pr-10 transition-all" value={currentBaseRate} onChange={(e) => updateExternals({ baseRate: parseInt(e.target.value) })}>
                       {getRateOptions(activeCategory).map(r => (<option key={r} value={r}>£{formatNumber(r, 0)}</option>))}
@@ -298,14 +298,14 @@ const ExternalsWizardPage: React.FC<{
 
         {/* Outbuildings */}
         <section ref={sectionRefs[1]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200">
-            <SectionHeader id="outbuildings" title="Outbuildings" icon={<Hammer size={24} />} />
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200">
+            <SectionHeader id="outbuildings" title="Outbuildings" icon={<Hammer size={20} />} />
             <div className="space-y-6">
               {!isLocked && (<button onClick={() => updateExternals({ items: [...assessment.items, { id: Date.now().toString(), category: 'Outbuildings', description: '', quantity: 0, rate: currentBaseRate, unit: 'm2' }] })} className="text-emerald-600 font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-emerald-50 px-6 py-3 rounded-2xl transition-all border border-emerald-100 shadow-sm mb-6"><Plus size={16} /> Add Structure</button>)}
-              <div className="bg-slate-50/50 rounded-[2rem] border border-slate-200 overflow-hidden shadow-inner mb-8">
-                <table className="w-full text-left">
+              <div className="bg-slate-50/50 rounded-2xl sm:rounded-[2rem] border border-slate-200 overflow-x-auto shadow-inner mb-8">
+                <table className="w-full text-left min-w-[500px]">
                   <thead className="bg-slate-100/50 border-b border-slate-200">
-                    <tr><th className="px-6 py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Description</th><th className="px-6 py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest text-center">GIA (m²)</th><th className="px-6 py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest text-right">Rate (£/m²)</th><th className="px-6 py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest text-right">Sum (£)</th></tr>
+                    <tr><th className="px-4 sm:px-6 py-3 sm:py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest">Description</th><th className="px-4 sm:px-6 py-3 sm:py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest text-center">GIA (m²)</th><th className="px-4 sm:px-6 py-3 sm:py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest text-right">Rate (£/m²)</th><th className="px-4 sm:px-6 py-3 sm:py-4 text-[9px] font-bold text-slate-500 uppercase tracking-widest text-right">Sum (£)</th></tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {outbuildingsItems.map((item) => (
@@ -319,13 +319,13 @@ const ExternalsWizardPage: React.FC<{
                   </tbody>
                 </table>
               </div>
-              <div className="bg-slate-900 text-white p-14 rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
-                 <div className="grid grid-cols-12 gap-10 items-center relative z-10">
-                    <div className="col-span-5 space-y-4">
+              <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-14 rounded-2xl sm:rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
+                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-10 items-center relative z-10">
+                    <div className="sm:col-span-5 space-y-4">
                        <div className="flex flex-col gap-1 border-b border-white/5 pb-3"><span className="text-slate-500 text-[9px] font-bold uppercase tracking-widest whitespace-nowrap">Regional Factor</span><span className="text-emerald-400 text-sm font-bold">x{formatNumber(regionalFactorValue, 2)} Applied</span></div>
                        <div className="flex flex-col gap-1"><span className="text-slate-500 text-[9px] font-bold uppercase tracking-widest whitespace-nowrap">Base Sum</span><span className="text-slate-300 text-sm font-bold">£{formatNumber(outbuildingsBaseSum, 2)}</span></div>
                     </div>
-                    <div className="col-span-7"><div className="bg-white/5 p-14 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner px-10"><p className="text-emerald-400 text-[11px] font-bold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Net Outbuilding Cost</p><h4 className="text-4xl font-bold tracking-tighter whitespace-nowrap">£{formatNumber(outbuildingsNetTotal, 2)}</h4></div></div>
+                    <div className="sm:col-span-7"><div className="bg-white/5 p-6 sm:p-10 md:p-14 rounded-xl sm:rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner sm:px-10"><p className="text-emerald-400 text-[11px] font-bold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Net Outbuilding Cost</p><h4 className="text-2xl sm:text-4xl font-bold tracking-tighter whitespace-nowrap">£{formatNumber(outbuildingsNetTotal, 2)}</h4></div></div>
                  </div>
                  <div className="absolute top-0 right-0 w-40 h-40 bg-emerald-600 rounded-full blur-[100px] opacity-10 -mr-20 -mt-20"></div>
               </div>
@@ -335,8 +335,8 @@ const ExternalsWizardPage: React.FC<{
 
         {/* Anomalies */}
         <section ref={sectionRefs[2]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200">
-            <SectionHeader id="anomalies" title="Anomalous Items" icon={<LayoutGrid size={24} />} />
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200">
+            <SectionHeader id="anomalies" title="Anomalous Items" icon={<LayoutGrid size={20} />} />
             <div className="space-y-6">
               {!isLocked && (<button onClick={() => updateExternals({ items: [...assessment.items, { id: Date.now().toString(), category: 'Anomalies', description: '', quantity: 0, rate: 0, unit: 'Nr' }] })} className="text-emerald-600 font-bold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-emerald-50 px-6 py-3 rounded-2xl transition-all border border-emerald-100 shadow-sm mb-6"><Plus size={16} /> Add Provision</button>)}
               <div className="bg-slate-50/50 rounded-[2rem] border border-slate-200 overflow-hidden shadow-inner mb-8">
@@ -362,13 +362,13 @@ const ExternalsWizardPage: React.FC<{
                   </tbody>
                 </table>
               </div>
-              <div className="bg-slate-900 text-white p-14 rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
-                 <div className="grid grid-cols-12 gap-10 items-center relative z-10">
-                    <div className="col-span-5 space-y-4">
+              <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-14 rounded-2xl sm:rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
+                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-10 items-center relative z-10">
+                    <div className="sm:col-span-5 space-y-4">
                        <div className="flex flex-col gap-1 border-b border-white/5 pb-3"><span className="text-slate-500 text-[9px] font-bold uppercase tracking-widest whitespace-nowrap">Location Multiplier</span><span className="text-emerald-400 text-sm font-bold">x{formatNumber(regionalFactorValue, 2)} Factor</span></div>
                        <div className="flex flex-col gap-1"><span className="text-slate-500 text-[9px] font-bold uppercase tracking-widest whitespace-nowrap">Anomalies Base Sum</span><span className="text-slate-300 text-sm font-bold">£{formatNumber(anomaliesBaseSum, 2)}</span></div>
                     </div>
-                    <div className="col-span-7"><div className="text-center bg-white/5 p-14 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center shadow-inner px-10"><p className="text-emerald-400 text-[11px] font-bold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Adjusted Anomalies Cost</p><h4 className="text-4xl font-bold tracking-tighter whitespace-nowrap">£{formatNumber(anomaliesNetTotal, 2)}</h4></div></div>
+                    <div className="col-span-7"><div className="text-center bg-white/5 p-14 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center shadow-inner px-10"><p className="text-emerald-400 text-[11px] font-bold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Adjusted Anomalies Cost</p><h4 className="text-2xl sm:text-4xl font-bold tracking-tighter whitespace-nowrap">£{formatNumber(anomaliesNetTotal, 2)}</h4></div></div>
                  </div>
               </div>
             </div>
@@ -377,15 +377,15 @@ const ExternalsWizardPage: React.FC<{
 
         {/* Summary */}
         <section ref={sectionRefs[3]} className="max-w-3xl mx-auto scroll-mt-32">
-          <div className="bg-white rounded-[3.5rem] shadow-2xl border border-slate-200 overflow-hidden transition-all">
-             <div className="bg-slate-900 text-white p-12 relative overflow-hidden transition-all"><ShieldCheck className="text-emerald-400 inline mr-4" size={32} /><h3 className="text-2xl font-bold uppercase tracking-[0.3em] inline">Assessment Maturity</h3></div>
-             <div className="p-12 space-y-12 transition-all">
+          <div className="bg-white rounded-2xl sm:rounded-[3.5rem] shadow-2xl border border-slate-200 overflow-hidden transition-all">
+             <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-12 relative overflow-hidden transition-all"><ShieldCheck className="text-emerald-400 inline mr-3 sm:mr-4" size={24} /><h3 className="text-lg sm:text-2xl font-bold uppercase tracking-widest sm:tracking-[0.3em] inline">Assessment Maturity</h3></div>
+             <div className="p-5 sm:p-8 md:p-12 space-y-8 sm:space-y-12 transition-all">
                 <div className="space-y-6"><h4 className="text-[11px] font-bold text-slate-900 uppercase tracking-[0.2em] border-b border-slate-100 pb-4 px-1">Valuation Breakdown</h4><div className="space-y-4 font-bold text-sm"><div className="flex justify-between items-center text-slate-600"><span>Outbuildings (Adjusted)</span><span className="text-slate-900">£{formatNumber(outbuildingsNetTotal, 2)}</span></div><div className="flex justify-between items-center text-slate-600"><span>Anomalies (Adjusted)</span><span className="text-slate-900">£{formatNumber(anomaliesNetTotal, 2)}</span></div><div className="flex justify-between items-center font-bold text-slate-900 pt-3 border-t border-slate-100"><span>Total Net Externals</span><span className="text-lg">£{formatNumber(totalExternalsNet, 2)}</span></div></div></div>
                 <div className="pt-6">
-                   <div className="bg-slate-900 text-white rounded-[3.5rem] p-16 relative overflow-hidden shadow-2xl border border-slate-800 text-center space-y-4">
+                   <div className="bg-slate-900 text-white rounded-2xl sm:rounded-[3.5rem] p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-2xl border border-slate-800 text-center space-y-4">
                       <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/20 via-transparent to-transparent"></div>
-                      <p className="text-emerald-400 text-[14px] font-bold uppercase tracking-[0.5em] relative z-10">Externals Reinstatement Value</p>
-                      <h2 className="text-8xl font-bold tracking-tighter relative z-10 transition-all">£{formatNumber(totalDayOneRCA, 0)}</h2>
+                      <p className="text-emerald-400 text-[11px] sm:text-[14px] font-bold uppercase tracking-widest sm:tracking-[0.5em] relative z-10">Externals Reinstatement Value</p>
+                      <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter relative z-10 transition-all">£{formatNumber(totalDayOneRCA, 0)}</h2>
                       <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 relative z-10">(Day One Basis)</p>
                    </div>
                 </div>
@@ -394,9 +394,9 @@ const ExternalsWizardPage: React.FC<{
         </section>
       </div>
 
-      <div className="bg-white border-t border-slate-200 p-8 flex justify-between items-center z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] transition-all">
-        <button onClick={onBack} className="px-10 py-4 text-slate-600 font-bold uppercase tracking-widest text-[12px] hover:bg-slate-50 rounded-[2rem] border border-slate-200 transition-all">Project Hub</button>
-        <button onClick={handleFinalize} className={`px-12 py-4 text-white font-bold uppercase tracking-[0.1em] text-[12px] rounded-[2rem] transition-all shadow-2xl ${isLocked ? 'bg-amber-600' : 'bg-slate-900'}`}>{isLocked ? 'Unlock' : 'Finalize Externals'}</button>
+      <div className="bg-white border-t border-slate-200 p-4 sm:p-8 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] transition-all">
+        <button onClick={onBack} className="px-6 sm:px-10 py-3 sm:py-4 text-slate-600 font-bold uppercase tracking-widest text-[11px] sm:text-[12px] hover:bg-slate-50 rounded-2xl sm:rounded-[2rem] border border-slate-200 transition-all">Project Hub</button>
+        <button onClick={handleFinalize} className={`px-8 sm:px-12 py-3 sm:py-4 text-white font-bold uppercase tracking-widest sm:tracking-[0.1em] text-[11px] sm:text-[12px] rounded-2xl sm:rounded-[2rem] transition-all shadow-2xl ${isLocked ? 'bg-amber-600' : 'bg-slate-900'}`}>{isLocked ? 'Unlock' : 'Finalize Externals'}</button>
       </div>
     </div>
   );

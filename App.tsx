@@ -123,13 +123,13 @@ const App: React.FC = () => {
 
       <main className="flex-1 overflow-auto h-screen relative min-w-0">
         {/* Mobile Header */}
-        <div className="lg:hidden sticky top-0 z-50 bg-slate-900 text-white px-4 py-3 flex items-center gap-3 shadow-lg">
+        {!mobileSidebarOpen && <div className="lg:hidden sticky top-0 z-50 bg-slate-900 text-white px-4 py-3 flex items-center gap-3 shadow-lg">
           <button onClick={() => setMobileSidebarOpen(true)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
             <Menu size={22} />
           </button>
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold italic text-sm shadow-lg shadow-blue-900/40">R</div>
           <span className="font-bold text-sm tracking-tight">RCA Wizard</span>
-        </div>
+        </div>}
 
         {/* Demo Mode Banner */}
         {DEMO_MODE && !demoBannerDismissed && (

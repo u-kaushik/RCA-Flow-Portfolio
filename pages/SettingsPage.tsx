@@ -58,22 +58,22 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ user, onUpdate, store }) =>
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto pb-32 font-inter relative">
-      <h1 className="text-3xl font-bold text-slate-900 mb-2 tracking-tight">Account Settings</h1>
-      <p className="text-slate-500 mb-10 font-medium">Manage your professional profile and application defaults.</p>
+    <div className="p-4 sm:p-6 md:p-8 max-w-4xl mx-auto pb-32 font-inter relative">
+      <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 tracking-tight">Account Settings</h1>
+      <p className="text-slate-500 mb-6 sm:mb-10 font-medium text-sm sm:text-base">Manage your professional profile and application defaults.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="md:col-span-2 space-y-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        <div className="md:col-span-2 space-y-6 sm:space-y-8">
           
           {/* Profile Section */}
-          <section className="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 p-10">
-            <h3 className="text-xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <Shield size={22} className="text-blue-600" />
+          <section className="bg-white rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200 p-5 sm:p-8 md:p-10">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-6 sm:mb-8 flex items-center gap-3">
+              <Shield size={20} className="text-blue-600" />
               Profile Information
             </h3>
 
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
+            <div className="space-y-5 sm:space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1">First Name</label>
                   <input 
@@ -169,17 +169,17 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ user, onUpdate, store }) =>
           </section>
 
           {/* Defaults Section */}
-          <section className="bg-white rounded-[2.5rem] shadow-sm border border-slate-200 p-10">
-            <h3 className="text-xl font-bold text-slate-900 mb-8 flex items-center gap-3">
-              <TrendingUp size={22} className="text-blue-600" />
+          <section className="bg-white rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200 p-5 sm:p-8 md:p-10">
+            <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-6 sm:mb-8 flex items-center gap-3">
+              <TrendingUp size={20} className="text-blue-600" />
               Surveyor Defaults
             </h3>
-            <p className="text-xs font-semibold text-slate-400 mb-10 uppercase tracking-widest leading-relaxed">
+            <p className="text-xs font-semibold text-slate-400 mb-6 sm:mb-10 uppercase tracking-widest leading-relaxed">
               Configure global presets used when registering new building blocks.
             </p>
 
-            <div className="space-y-8">
-               <div className="grid grid-cols-2 gap-8">
+            <div className="space-y-6 sm:space-y-8">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1">Default UK Region</label>
                     <div className="relative group/select">
@@ -205,7 +205,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ user, onUpdate, store }) =>
                   </div>
                </div>
 
-               <div className="grid grid-cols-2 gap-8">
+               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
                   <div>
                     <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1">Initial Level Count</label>
                     <input 
@@ -232,7 +232,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ user, onUpdate, store }) =>
 
           {/* Admin Team Section */}
           {isAdmin && store && (
-            <section className="bg-slate-900 text-white rounded-[2.5rem] shadow-2xl border border-slate-800 p-10 relative overflow-hidden">
+            <section className="bg-slate-900 text-white rounded-2xl sm:rounded-[2.5rem] shadow-2xl border border-slate-800 p-5 sm:p-8 md:p-10 relative overflow-hidden">
                <div className="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[100px] opacity-10 -mr-32 -mt-32"></div>
                <div className="flex items-center justify-between mb-8 relative z-10">
                  <div>
@@ -297,15 +297,15 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ user, onUpdate, store }) =>
           <div className="flex justify-end pt-4">
             <button 
               onClick={handleSave}
-              className="bg-slate-900 text-white px-12 py-5 rounded-[2rem] font-bold uppercase text-[12px] tracking-widest hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200"
+              className="bg-slate-900 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-2xl sm:rounded-[2rem] font-bold uppercase text-[11px] sm:text-[12px] tracking-widest hover:bg-blue-600 transition-all shadow-2xl shadow-slate-200 w-full sm:w-auto"
             >
               Update All Settings
             </button>
           </div>
         </div>
 
-        <div className="space-y-8">
-           <div className="bg-slate-900 text-white rounded-[2.5rem] p-10 relative overflow-hidden shadow-2xl">
+        <div className="space-y-6 sm:space-y-8">
+           <div className="bg-slate-900 text-white rounded-2xl sm:rounded-[2.5rem] p-6 sm:p-10 relative overflow-hidden shadow-2xl">
               <div className="relative z-10 text-center">
                  <div className="w-24 h-24 bg-slate-700 rounded-[2rem] mx-auto mb-6 border-2 border-slate-600 overflow-hidden shadow-2xl">
                     <img src={user.avatar || `https://picsum.photos/seed/${user.id}/100/100`} alt={firstName} className="w-full h-full object-cover" />
@@ -320,7 +320,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ user, onUpdate, store }) =>
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600 rounded-full blur-[70px] opacity-20 -mr-16 -mt-16"></div>
            </div>
 
-           <div className="bg-blue-600 rounded-[2.5rem] p-10 text-white shadow-xl relative overflow-hidden">
+           <div className="bg-blue-600 rounded-2xl sm:rounded-[2.5rem] p-6 sm:p-10 text-white shadow-xl relative overflow-hidden">
               <div className="relative z-10 text-center">
                  <h4 className="font-semibold text-xs uppercase tracking-widest mb-4 opacity-70">Security Protocol</h4>
                  <p className="text-[10px] font-medium opacity-80 leading-relaxed">

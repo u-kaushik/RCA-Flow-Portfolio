@@ -257,17 +257,17 @@ const WizardPage: React.FC<{
   const totalSelectedCount = selectedFloors.size + selectedAdjustments.size + selectedAnomalies.size;
 
   const SectionHeader = ({ id, title, icon: Icon }: { id: string, title: string, icon: React.ReactNode }) => (
-    <div className="flex items-center justify-between mb-10">
-      <h3 className="text-2xl font-bold text-slate-900 flex items-center gap-4">
-        <div className={`p-3 rounded-2xl shadow-inner ${(block.completedSections || []).includes(id) ? 'bg-green-50 text-green-600' : 'bg-blue-50 text-blue-600'}`}>{Icon}</div>
+    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 sm:mb-10">
+      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-3 sm:gap-4">
+        <div className={`p-2 sm:p-3 rounded-xl sm:rounded-2xl shadow-inner ${(block.completedSections || []).includes(id) ? 'bg-green-50 text-green-600' : 'bg-blue-50 text-blue-600'}`}>{Icon}</div>
         {title}
       </h3>
-      <button 
+      <button
         onClick={() => { const cur = block.completedSections || []; updateBlock({ completedSections: cur.includes(id) ? cur.filter(x => x !== id) : [...cur, id] }); }}
         disabled={isLocked}
-        className={`px-6 py-3 rounded-2xl font-semibold text-[10px] uppercase tracking-widest transition-all border ${ (block.completedSections || []).includes(id) ? 'bg-green-50 border-green-200 text-green-600' : 'bg-slate-50 border-slate-200 text-slate-400 hover:bg-slate-100'}`}
+        className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl font-semibold text-[10px] uppercase tracking-widest transition-all border shrink-0 ${ (block.completedSections || []).includes(id) ? 'bg-green-50 border-green-200 text-green-600' : 'bg-slate-50 border-slate-200 text-slate-400 hover:bg-slate-100'}`}
       >
-        {(block.completedSections || []).includes(id) ? <><CheckCircle2 className="inline mr-2" size={16} /> Section Done</> : <><Circle className="inline mr-2" size={16} /> Mark Done</>}
+        {(block.completedSections || []).includes(id) ? <><CheckCircle2 className="inline mr-2" size={14} /> Done</> : <><Circle className="inline mr-2" size={14} /> Mark Done</>}
       </button>
     </div>
   );
@@ -337,26 +337,26 @@ const WizardPage: React.FC<{
       )}
 
       {/* Main Content */}
-      <div ref={scrollContainerRef} className="flex-1 overflow-auto custom-scrollbar p-12 space-y-24 pb-32 no-print">
+      <div ref={scrollContainerRef} className="flex-1 overflow-auto custom-scrollbar p-4 sm:p-8 md:p-12 space-y-12 sm:space-y-24 pb-32 no-print">
         
         {/* Section 1: Overview */}
         <section ref={sectionRefs[0]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200">
-            <SectionHeader id="overview" title="Assessment Overview" icon={<Info size={24} />} />
-            <div className="space-y-8">
-              <div className="space-y-6 p-8 bg-slate-50/50 rounded-[2rem] border border-slate-100">
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200">
+            <SectionHeader id="overview" title="Assessment Overview" icon={<Info size={22} />} />
+            <div className="space-y-6 sm:space-y-8">
+              <div className="space-y-4 sm:space-y-6 p-4 sm:p-8 bg-slate-50/50 rounded-xl sm:rounded-[2rem] border border-slate-100">
                 <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2"><Building2 size={14} /> Development Context</h4>
-                <div className="grid grid-cols-12 gap-6 items-end">
-                   <div className="col-span-10">
+                <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-6 items-end">
+                   <div className="sm:col-span-10">
                       <label className="block text-[10px] font-semibold text-slate-900 uppercase tracking-widest mb-1.5 px-1">Property Address</label>
-                      <input disabled={isLocked} type="text" value={development.name} onChange={e => onUpdateDevelopment({ ...development, name: e.target.value })} className="w-full bg-white border border-slate-200 rounded-xl py-3.5 px-5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none" />
+                      <input disabled={isLocked} type="text" value={development.name} onChange={e => onUpdateDevelopment({ ...development, name: e.target.value })} className="w-full bg-white border border-slate-200 rounded-xl py-3 sm:py-3.5 px-4 sm:px-5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none" />
                    </div>
-                   <div className="col-span-2">
+                   <div className="sm:col-span-2">
                       <label className="block text-[10px] font-semibold text-slate-900 uppercase tracking-widest mb-1.5 px-1">Block Count</label>
-                      <NumberInput disabled={true} allowDecimals={false} value={development.blocks.length} onChange={() => {}} className="w-full" maxDigits={2} paddingClass="py-3.5 px-3" />
+                      <NumberInput disabled={true} allowDecimals={false} value={development.blocks.length} onChange={() => {}} className="w-full" maxDigits={2} paddingClass="py-3 sm:py-3.5 px-3" />
                    </div>
                 </div>
-                <div className="grid grid-cols-2 gap-6 mt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4">
                   <div>
                     <label className="block text-[10px] font-semibold text-slate-900 uppercase tracking-widest mb-1.5 px-1">Scheme Number</label>
                     <input disabled={isLocked} type="text" value={development.reference} onChange={e => onUpdateDevelopment({ ...development, reference: e.target.value })} className="w-full bg-white border border-slate-200 rounded-xl py-3.5 px-5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none" />
@@ -367,13 +367,13 @@ const WizardPage: React.FC<{
                   </div>
                 </div>
               </div>
-              <div className="space-y-6 p-8 border border-transparent">
+              <div className="space-y-4 sm:space-y-6 p-4 sm:p-8 border border-transparent">
                 <h4 className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest flex items-center gap-2"><MapPin size={14} /> Block Identifier Details</h4>
                 <div>
                    <label className="block text-[10px] font-semibold text-slate-900 uppercase tracking-widest mb-1.5 px-1">Block Address</label>
-                   <input disabled={isLocked} type="text" value={block.addressLine || ''} onChange={e => updateBlock({ addressLine: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 px-5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none" />
+                   <input disabled={isLocked} type="text" value={block.addressLine || ''} onChange={e => updateBlock({ addressLine: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3 sm:py-3.5 px-4 sm:px-5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none" />
                 </div>
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label className="block text-[10px] font-semibold text-slate-900 uppercase tracking-widest mb-1.5 px-1">Town/City</label>
                     <input disabled={isLocked} type="text" value={block.town || ''} onChange={e => updateBlock({ town: e.target.value })} className="w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 px-5 text-sm font-bold text-slate-900 focus:ring-2 focus:ring-blue-500/20 transition-all outline-none" />
@@ -390,10 +390,10 @@ const WizardPage: React.FC<{
 
         {/* Section 2: Building Rate & Area */}
         <section ref={sectionRefs[1]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200 space-y-12">
-            <SectionHeader id="rates" title="Building Rate & Area" icon={<TrendingUp size={24} />} />
-            <div className="space-y-10">
-              <div className="grid grid-cols-2 gap-8 items-end">
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200 space-y-8 sm:space-y-12">
+            <SectionHeader id="rates" title="Building Rate & Area" icon={<TrendingUp size={22} />} />
+            <div className="space-y-6 sm:space-y-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 items-end">
                  <div>
                     <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1">UK Region Factor</label>
                     <div className="relative group/select">
@@ -408,8 +408,8 @@ const WizardPage: React.FC<{
                     <NumberInput disabled={isLocked} value={block.buildingRate?.locationFactor || 1} step={0.01} suffix="%" paddingClass="py-4 px-3" onChange={val => updateBlock({ buildingRate: { ...block.buildingRate, locationFactor: val } })} />
                  </div>
               </div>
-              <div className="grid grid-cols-12 gap-8 items-end pt-6 border-t border-slate-100">
-                <div className="col-span-9">
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 sm:gap-8 items-end pt-6 border-t border-slate-100">
+                <div className="sm:col-span-9">
                   <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1">Spon's 2025 Standard Category</label>
                   <div className="relative group/select">
                     <select disabled={isLocked} className="w-full bg-white border border-slate-200 rounded-2xl py-4 px-6 text-sm font-bold text-slate-900 appearance-none outline-none focus:ring-4 focus:ring-blue-500/10 pr-12 transition-all" onChange={(e) => setSelectedCategoryLabel(e.target.value)} value={selectedCategoryLabel}>
@@ -418,8 +418,8 @@ const WizardPage: React.FC<{
                     <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" size={20} />
                   </div>
                 </div>
-                <div className="col-span-3">
-                  <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1 text-right">Base Rate</label>
+                <div className="sm:col-span-3">
+                  <label className="block text-[11px] font-semibold text-slate-900 uppercase tracking-widest mb-2 px-1 sm:text-right">Base Rate</label>
                   <div className="relative group/select">
                     <select disabled={isLocked} className="w-full bg-white border border-slate-200 rounded-2xl py-4 px-6 text-sm font-bold text-slate-900 appearance-none outline-none focus:ring-4 focus:ring-blue-500/10 text-right pr-10 transition-all" value={currentGlobalBaseRate} onChange={(e) => { const newRate = parseInt(e.target.value); const nextRates = { ...block.buildingRate.ratesPerFloor }; block.floors.forEach(f => nextRates[f.level] = newRate); updateBlock({ buildingRate: { ...block.buildingRate, ratesPerFloor: nextRates } }); }}>
                       {getRateOptions(activeCategory).map(r => (<option key={r} value={r}>£{formatNumber(r, 0)}</option>))}
@@ -434,14 +434,14 @@ const WizardPage: React.FC<{
 
         {/* Section 3: Cost Breakdown */}
         <section ref={sectionRefs[2]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200">
-            <SectionHeader id="breakdown" title="Building Cost Breakdown" icon={<PoundSterling size={24} />} />
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200">
+            <SectionHeader id="breakdown" title="Building Cost Breakdown" icon={<PoundSterling size={22} />} />
             <div className="space-y-6">
               {!isLocked && (<button onClick={() => { const nextLvl = LEVEL_OPTIONS[block.floors.length] || `Level ${block.floors.length}`; updateBlock({ floors: [...block.floors, { id: Date.now().toString(), description: nextLvl, level: nextLvl, gia: 0, gfa: 0 }], buildingRate: { ...block.buildingRate, ratesPerFloor: { ...block.buildingRate.ratesPerFloor, [nextLvl]: currentGlobalBaseRate } } }); }} className="text-blue-600 font-semibold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-blue-50 px-6 py-3 rounded-2xl transition-all border border-blue-100 shadow-sm mb-6"><Plus size={16} /> Add Building Level</button>)}
-              <div className="bg-slate-50/50 rounded-[2rem] border border-slate-200 overflow-hidden shadow-inner mb-8">
-                <table className="w-full text-left">
+              <div className="bg-slate-50/50 rounded-xl sm:rounded-[2rem] border border-slate-200 overflow-x-auto shadow-inner mb-8">
+                <table className="w-full text-left min-w-[500px]">
                   <thead className="bg-slate-100/50 border-b border-slate-200">
-                    <tr><th className="px-6 py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest">Level</th><th className="px-6 py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest text-center">GIA (m²)</th><th className="px-6 py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest text-right">Rate (£/m²)</th><th className="px-6 py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest text-right">Sum (£)</th></tr>
+                    <tr><th className="px-3 sm:px-6 py-3 sm:py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest">Level</th><th className="px-3 sm:px-6 py-3 sm:py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest text-center">GIA (m²)</th><th className="px-3 sm:px-6 py-3 sm:py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest text-right">Rate (£/m²)</th><th className="px-3 sm:px-6 py-3 sm:py-4 text-[9px] font-semibold text-slate-500 uppercase tracking-widest text-right">Sum (£)</th></tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
                     {block.floors.map((floor) => (
@@ -455,13 +455,13 @@ const WizardPage: React.FC<{
                   </tbody>
                 </table>
               </div>
-              <div className="bg-slate-900 text-white p-14 rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
-                 <div className="grid grid-cols-12 gap-10 items-center relative z-10">
-                    <div className="col-span-5 space-y-6">
+              <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-14 rounded-2xl sm:rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
+                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-10 items-center relative z-10">
+                    <div className="sm:col-span-5 space-y-6">
                        <div className="flex flex-col gap-1 border-b border-white/5 pb-4"><span className="text-slate-500 text-[10px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap">Aggregate Area</span><span className="text-blue-400 text-lg font-bold">{totalGIA.toLocaleString()} m²</span></div>
                        <div className="flex flex-col gap-1"><span className="text-slate-500 text-[10px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap">Net Construction</span><span className="text-slate-300 text-lg font-bold">£{formatNumber(buildingCostExact, 2)}</span></div>
                     </div>
-                    <div className="col-span-7"><div className="bg-white/5 p-14 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner"><p className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Building Asset Cost</p><h4 className="text-4xl font-bold tracking-tighter">£{formatNumber(buildingCostExact, 2)}</h4></div></div>
+                    <div className="sm:col-span-7"><div className="bg-white/5 p-6 sm:p-10 md:p-14 rounded-xl sm:rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner"><p className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Building Asset Cost</p><h4 className="text-2xl sm:text-4xl font-bold tracking-tighter">£{formatNumber(buildingCostExact, 2)}</h4></div></div>
                  </div>
                  <div className="absolute top-0 right-0 w-40 h-40 bg-blue-600 rounded-full blur-[100px] opacity-10 -mr-20 -mt-20"></div>
               </div>
@@ -471,28 +471,28 @@ const WizardPage: React.FC<{
 
         {/* Section 4: Adjustments */}
         <section ref={sectionRefs[3]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200">
-            <SectionHeader id="adjustments" title="Aggregate Adjustments" icon={<Hash size={24} />} />
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200">
+            <SectionHeader id="adjustments" title="Aggregate Adjustments" icon={<Hash size={22} />} />
             <div className="space-y-6">
                {!isLocked && (<button onClick={() => updateBlock({ adjustments: [...block.adjustments, { id: Date.now().toString(), type: 'Access', uplift: 0, reason: '' }] })} className="text-blue-600 font-semibold text-xs uppercase tracking-widest flex items-center gap-2 hover:bg-blue-50 px-6 py-3 rounded-2xl transition-all border border-blue-100 shadow-sm mb-6"><Plus size={16} /> Add Uplift Factor</button>)}
                <div className="space-y-4">
                   {block.adjustments.map((adj) => (
-                    <div key={adj.id} onClick={() => toggleSelection(adj.id, 'adj')} className={`p-6 rounded-[2rem] border transition-all cursor-pointer flex items-center gap-4 ${selectedAdjustments.has(adj.id) ? 'bg-blue-100/50 border-blue-200' : 'bg-white border-slate-200'}`}>
-                         <div className="grid grid-cols-12 gap-4 items-center w-full">
-                            <div className="col-span-3" onClick={e => e.stopPropagation()}><select disabled={isLocked} value={adj.type} onChange={e => { updateBlock({ adjustments: block.adjustments.map(x => x.id === adj.id ? {...x, type: e.target.value} : x) }); }} className="w-full bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-4 text-[10px] font-semibold uppercase tracking-widest text-slate-700 outline-none">{ADJUSTMENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}</select></div>
-                            <div className="col-span-4" onClick={e => e.stopPropagation()}><input disabled={isLocked} value={adj.reason} onChange={e => { updateBlock({ adjustments: block.adjustments.map(x => x.id === adj.id ? {...x, reason: e.target.value} : x) }); }} placeholder="Rationale..." className="w-full bg-white border border-slate-200 rounded-xl py-2.5 px-4 text-xs font-medium text-slate-900 outline-none" /></div>
-                            <div className="col-span-2" onClick={e => e.stopPropagation()}><NumberInput disabled={isLocked} value={adj.uplift} step={0.5} suffix="%" paddingClass="py-2 px-2" className="text-center w-32" maxDigits={3} onChange={v => { updateBlock({ adjustments: block.adjustments.map(x => x.id === adj.id ? {...x, uplift: v} : x) }); }} /></div>
-                            <div className="col-span-3 text-right"><p className="text-sm font-bold text-slate-900">£{formatNumber(buildingCostExact * (adj.uplift / 100), 2)}</p></div>
+                    <div key={adj.id} onClick={() => toggleSelection(adj.id, 'adj')} className={`p-4 sm:p-6 rounded-xl sm:rounded-[2rem] border transition-all cursor-pointer ${selectedAdjustments.has(adj.id) ? 'bg-blue-100/50 border-blue-200' : 'bg-white border-slate-200'}`}>
+                         <div className="grid grid-cols-2 sm:grid-cols-12 gap-3 sm:gap-4 items-center w-full">
+                            <div className="col-span-2 sm:col-span-3" onClick={e => e.stopPropagation()}><select disabled={isLocked} value={adj.type} onChange={e => { updateBlock({ adjustments: block.adjustments.map(x => x.id === adj.id ? {...x, type: e.target.value} : x) }); }} className="w-full bg-slate-50 border border-slate-100 rounded-xl py-2.5 px-3 sm:px-4 text-[10px] font-semibold uppercase tracking-widest text-slate-700 outline-none">{ADJUSTMENT_TYPES.map(t => <option key={t} value={t}>{t}</option>)}</select></div>
+                            <div className="col-span-2 sm:col-span-4" onClick={e => e.stopPropagation()}><input disabled={isLocked} value={adj.reason} onChange={e => { updateBlock({ adjustments: block.adjustments.map(x => x.id === adj.id ? {...x, reason: e.target.value} : x) }); }} placeholder="Rationale..." className="w-full bg-white border border-slate-200 rounded-xl py-2.5 px-3 sm:px-4 text-xs font-medium text-slate-900 outline-none" /></div>
+                            <div className="col-span-1 sm:col-span-2" onClick={e => e.stopPropagation()}><NumberInput disabled={isLocked} value={adj.uplift} step={0.5} suffix="%" paddingClass="py-2 px-2" className="text-center w-full sm:w-32" maxDigits={3} onChange={v => { updateBlock({ adjustments: block.adjustments.map(x => x.id === adj.id ? {...x, uplift: v} : x) }); }} /></div>
+                            <div className="col-span-1 sm:col-span-3 text-right"><p className="text-sm font-bold text-slate-900">£{formatNumber(buildingCostExact * (adj.uplift / 100), 2)}</p></div>
                          </div>
                     </div>
                   ))}
-                  <div className="bg-slate-900 text-white p-14 rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
-                     <div className="grid grid-cols-12 gap-10 items-center relative z-10">
-                        <div className="col-span-5 space-y-6">
+                  <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-14 rounded-2xl sm:rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
+                     <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-10 items-center relative z-10">
+                        <div className="sm:col-span-5 space-y-6">
                            <div className="flex flex-col gap-1 border-b border-white/5 pb-4"><span className="text-slate-500 text-[10px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap">Total Adjustment</span><span className="text-blue-400 text-lg font-bold">{formatNumber(upliftsPercent, 1)}%</span></div>
                            <div className="flex flex-col gap-1"><span className="text-slate-500 text-[10px] font-semibold uppercase tracking-[0.2em] whitespace-nowrap">Revised Adjustment</span><span className="text-slate-300 text-lg font-bold">£{formatNumber(netAdjustmentAmountExact, 2)}</span></div>
                         </div>
-                        <div className="col-span-7"><div className="bg-white/5 p-14 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner"><p className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Revised Net Building Cost</p><h4 className="text-4xl font-bold tracking-tighter">£{formatNumber(revisedNetBuildingCostExact, 2)}</h4></div></div>
+                        <div className="sm:col-span-7"><div className="bg-white/5 p-6 sm:p-10 md:p-14 rounded-xl sm:rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner"><p className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Revised Net Building Cost</p><h4 className="text-2xl sm:text-4xl font-bold tracking-tighter">£{formatNumber(revisedNetBuildingCostExact, 2)}</h4></div></div>
                      </div>
                   </div>
                </div>
@@ -502,12 +502,12 @@ const WizardPage: React.FC<{
 
         {/* Section 5: Demolition */}
         <section ref={sectionRefs[4]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200">
-            <SectionHeader id="demolition" title="Demolition & Clearance" icon={<Hammer size={24} />} />
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200">
+            <SectionHeader id="demolition" title="Demolition & Clearance" icon={<Hammer size={22} />} />
             <div className="space-y-6">
-               <div className="bg-slate-900 text-white p-14 rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
-                 <div className="grid grid-cols-12 gap-10 items-center relative z-10">
-                    <div className="col-span-5 space-y-6">
+               <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-14 rounded-2xl sm:rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
+                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-10 items-center relative z-10">
+                    <div className="sm:col-span-5 space-y-6">
                        <div className="space-y-2">
                           <label className="block text-[11px] font-semibold text-slate-400 uppercase tracking-widest mb-1 whitespace-nowrap">Benchmark Rate</label>
                           <NumberInput disabled={isLocked} value={block.demolitionRate || 85} step={5} prefix="£" paddingClass="py-3 px-3" onChange={v => updateBlock({ demolitionRate: v })} />
@@ -517,7 +517,7 @@ const WizardPage: React.FC<{
                           <p className="text-[10px] text-slate-400 font-medium italic leading-relaxed">£{block.demolitionRate} per m² * {totalGIA.toLocaleString()} m² Aggregate Area</p>
                        </div>
                     </div>
-                    <div className="col-span-7"><div className="bg-white/5 p-14 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner"><p className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Demolition Aggregate</p><h4 className="text-4xl font-bold tracking-tighter">£{formatNumber(demolitionCostExact, 2)}</h4></div></div>
+                    <div className="sm:col-span-7"><div className="bg-white/5 p-6 sm:p-10 md:p-14 rounded-xl sm:rounded-[2rem] border border-white/10 flex flex-col items-center justify-center text-center shadow-inner"><p className="text-blue-400 text-[11px] font-semibold uppercase tracking-[0.3em] mb-3 whitespace-nowrap">Demolition Aggregate</p><h4 className="text-2xl sm:text-4xl font-bold tracking-tighter">£{formatNumber(demolitionCostExact, 2)}</h4></div></div>
                  </div>
                </div>
             </div>
@@ -526,8 +526,8 @@ const WizardPage: React.FC<{
 
         {/* Section 6: Anomalies */}
         <section ref={sectionRefs[5]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-200">
-            <SectionHeader id="anomalies" title="Anomalous Items" icon={<LayoutGrid size={24} />} />
+          <div className="bg-white p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-[2.5rem] shadow-sm border border-slate-200">
+            <SectionHeader id="anomalies" title="Anomalous Items" icon={<LayoutGrid size={22} />} />
             <div className="space-y-6">
               <div className="bg-slate-50/50 rounded-[2rem] border border-slate-200 overflow-hidden shadow-inner mb-8">
                 <table className="w-full text-left">
@@ -551,9 +551,9 @@ const WizardPage: React.FC<{
                   </tbody>
                 </table>
               </div>
-              <div className="bg-slate-900 text-white p-14 rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
-                 <div className="grid grid-cols-12 gap-10 items-center relative z-10">
-                    <div className="col-span-5 space-y-4">
+              <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-14 rounded-2xl sm:rounded-[2.5rem] relative overflow-hidden shadow-xl border border-slate-800">
+                 <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 sm:gap-10 items-center relative z-10">
+                    <div className="sm:col-span-5 space-y-4">
                        <div className="flex flex-col gap-1 border-b border-white/5 pb-3"><span className="text-slate-500 text-[9px] font-semibold uppercase tracking-widest whitespace-nowrap">Regional Coefficient</span><span className="text-amber-400 text-sm font-bold">x{formatNumber(block.buildingRate.locationFactor, 2)} Applied</span></div>
                        <div className="flex flex-col gap-1"><span className="text-slate-500 text-[9px] font-semibold uppercase tracking-widest whitespace-nowrap">Anomalies Base Sum</span><span className="text-slate-300 text-sm font-bold">£{formatNumber(anomaliesRawTotal, 2)}</span></div>
                     </div>
@@ -566,9 +566,9 @@ const WizardPage: React.FC<{
 
         {/* Section 7: Final Summary */}
         <section ref={sectionRefs[6]} className="max-w-3xl mx-auto space-y-8 scroll-mt-32">
-          <div className="bg-white rounded-[3.5rem] shadow-2xl border border-slate-200 overflow-hidden">
-             <div className="bg-slate-900 text-white p-12 relative overflow-hidden"><ShieldCheck className="text-blue-400 inline mr-4" size={32} /><h3 className="text-2xl font-bold uppercase tracking-[0.3em] inline">Assessment Maturity</h3></div>
-             <div className="p-12 space-y-12">
+          <div className="bg-white rounded-2xl sm:rounded-[3.5rem] shadow-2xl border border-slate-200 overflow-hidden">
+             <div className="bg-slate-900 text-white p-6 sm:p-10 md:p-12 relative overflow-hidden"><ShieldCheck className="text-blue-400 inline mr-3 sm:mr-4" size={24} /><h3 className="text-lg sm:text-2xl font-bold uppercase tracking-widest sm:tracking-[0.3em] inline">Assessment Maturity</h3></div>
+             <div className="p-5 sm:p-8 md:p-12 space-y-8 sm:space-y-12">
                 <div className="space-y-6">
                    <h4 className="text-[11px] font-semibold text-slate-900 uppercase tracking-[0.2em] border-b border-slate-100 pb-4 px-1">Total Construction Aggregate</h4>
                    <div className="space-y-4 font-bold text-sm">
@@ -608,10 +608,10 @@ const WizardPage: React.FC<{
                 </div>
 
                 <div className="pt-6">
-                   <div className="bg-slate-900 text-white rounded-[3.5rem] p-16 relative overflow-hidden shadow-2xl border border-slate-800 text-center space-y-2">
+                   <div className="bg-slate-900 text-white rounded-2xl sm:rounded-[3.5rem] p-8 sm:p-12 md:p-16 relative overflow-hidden shadow-2xl border border-slate-800 text-center space-y-2">
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 via-transparent to-transparent"></div>
-                      <p className="text-blue-400 text-[14px] font-semibold uppercase tracking-[0.5em] relative z-10">TOTAL REINSTATEMENT COST ON DAY ONE BASIS</p>
-                      <h2 className="text-8xl font-bold tracking-tighter relative z-10">£{formatNumber(totalReinstatementCostRounded, 0)}</h2>
+                      <p className="text-blue-400 text-[10px] sm:text-[14px] font-semibold uppercase tracking-widest sm:tracking-[0.5em] relative z-10">TOTAL REINSTATEMENT COST</p>
+                      <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter relative z-10">£{formatNumber(totalReinstatementCostRounded, 0)}</h2>
                       <p className="text-[10px] font-medium uppercase tracking-widest text-slate-500 relative z-10">(Rounded Up To Nearest £1,000)</p>
                    </div>
                 </div>
@@ -621,10 +621,10 @@ const WizardPage: React.FC<{
       </div>
 
       {/* Footer */}
-      <div className="bg-white border-t border-slate-200 p-8 flex justify-between items-center z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] no-print">
-        <button onClick={onBack} className="px-10 py-4 text-slate-600 font-semibold uppercase tracking-widest text-[12px] hover:bg-slate-50 rounded-[2rem] border border-slate-200 transition-all">Project Hub</button>
-        <button onClick={() => { const next = isLocked ? 'Draft' : 'Completed'; updateBlock({ status: next }); if (next === 'Completed') onBack(); }} className={`px-12 py-4 text-white font-semibold uppercase tracking-[0.1em] text-[12px] rounded-[2rem] transition-all shadow-2xl ${isLocked ? 'bg-amber-600' : 'bg-slate-900 hover:bg-slate-800'}`}>
-           {isLocked ? <><Undo2 className="inline mr-2" size={18} /> Unlock Block</> : <><CheckCircle2 className="inline mr-2" size={18} /> Verify Block Assessment</>}
+      <div className="bg-white border-t border-slate-200 p-4 sm:p-8 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.05)] no-print">
+        <button onClick={onBack} className="px-6 sm:px-10 py-3 sm:py-4 text-slate-600 font-semibold uppercase tracking-widest text-[11px] sm:text-[12px] hover:bg-slate-50 rounded-xl sm:rounded-[2rem] border border-slate-200 transition-all text-center">Project Hub</button>
+        <button onClick={() => { const next = isLocked ? 'Draft' : 'Completed'; updateBlock({ status: next }); if (next === 'Completed') onBack(); }} className={`px-6 sm:px-12 py-3 sm:py-4 text-white font-semibold uppercase tracking-widest sm:tracking-[0.1em] text-[11px] sm:text-[12px] rounded-xl sm:rounded-[2rem] transition-all shadow-2xl text-center ${isLocked ? 'bg-amber-600' : 'bg-slate-900 hover:bg-slate-800'}`}>
+           {isLocked ? <><Undo2 className="inline mr-2" size={16} /> Unlock Block</> : <><CheckCircle2 className="inline mr-2" size={16} /> Verify Block</>}
         </button>
       </div>
     </div>
