@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useStore } from './store';
+import { useStore, DEMO_MODE, DEMO_USERS } from './store';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import WizardPage from './pages/WizardPage';
@@ -11,7 +11,8 @@ import AnalyticsPage from './pages/AnalyticsPage';
 import Sidebar from './components/Sidebar';
 import ProjectManagementModal from './components/ProjectManagementModal';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
-import { Development, Block } from './types';
+import { Development, Block, UserRole } from './types';
+import { Eye, ShieldCheck, Users, ChevronDown } from 'lucide-react';
 
 const App: React.FC = () => {
   const store = useStore();
@@ -28,16 +29,25 @@ const App: React.FC = () => {
   // Global Menu Management to ensure only 1 is open
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null);
 
+  // Demo mode state
+  const [demoBannerDismissed, setDemoBannerDismissed] = useState(false);
+  const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
+
   useEffect(() => {
     const handleGlobalClick = () => {
        if (activeMenuId) setActiveMenuId(null);
+       setRoleDropdownOpen(false);
     };
     window.addEventListener('click', handleGlobalClick);
     return () => window.removeEventListener('click', handleGlobalClick);
   }, [activeMenuId]);
 
-  if (!store.user) {
+  if (!store.user && !DEMO_MODE) {
     return <LoginPage onLogin={(u) => store.login(u)} />;
+  }
+
+  if (!store.user) {
+    return null;
   }
 
   const activeDevelopment = store.developments.find(d => d.id === activeDevId) || null;
@@ -75,15 +85,22 @@ const App: React.FC = () => {
     setActiveMenuId(null);
   };
 
+  const handleSwitchRole = (roleKey: string) => {
+    store.setUser(DEMO_USERS[roleKey]);
+    setRoleDropdownOpen(false);
+  };
+
+  const currentRoleKey = store.user.roleType === UserRole.DEPT_HEAD ? 'DEPT_HEAD' : 'SURVEYOR';
+
   return (
     <div className="flex min-h-screen bg-slate-50">
-      <Sidebar 
-        activePage={currentPage} 
+      <Sidebar
+        activePage={currentPage}
         activeDevelopment={activeDevelopment}
         activeBlock={activeBlock}
         developments={store.developments}
         reports={store.reports}
-        onNavigate={(p) => { setCurrentPage(p); setActiveMenuId(null); }} 
+        onNavigate={(p) => { setCurrentPage(p); setActiveMenuId(null); }}
         onSelectDevelopment={navigateToDevelopment}
         onSelectBlock={navigateToBlock}
         onSelectExternals={(dev) => { setActiveDevId(dev.id); setCurrentPage('externals'); setActiveMenuId(null); }}
@@ -98,8 +115,71 @@ const App: React.FC = () => {
         setActiveMenuId={setActiveMenuId}
         onDuplicateDevelopment={(id) => { store.duplicateDevelopment(id); setActiveMenuId(null); }}
       />
-      
+
       <main className="flex-1 overflow-auto h-screen relative">
+        {/* Demo Mode Banner */}
+        {DEMO_MODE && !demoBannerDismissed && (
+          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white px-4 py-2.5 flex items-center justify-between z-50 relative shadow-lg">
+            <div className="flex items-center gap-3 flex-1 justify-center">
+              <Eye size={16} className="shrink-0" />
+              <span className="text-[11px] font-bold uppercase tracking-widest">Demo Mode</span>
+              <span className="text-xs font-medium opacity-90 hidden sm:inline">—  You're viewing with sample data. All content is fictional.</span>
+            </div>
+            <div className="flex items-center gap-3">
+              {/* Role Switcher */}
+              <div className="relative" onClick={(e) => e.stopPropagation()}>
+                <button
+                  onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
+                  className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl px-3 py-1.5 transition-all border border-white/30"
+                >
+                  {currentRoleKey === 'DEPT_HEAD' ? <ShieldCheck size={14} /> : <Users size={14} />}
+                  <span className="text-[10px] font-bold uppercase tracking-wider">
+                    {currentRoleKey === 'DEPT_HEAD' ? 'Dept Head' : 'Surveyor'}
+                  </span>
+                  <ChevronDown size={12} className={`transition-transform ${roleDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                {roleDropdownOpen && (
+                  <div className="absolute right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden w-64 z-[100]">
+                    <div className="px-4 py-3 border-b border-slate-100">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Switch Role</p>
+                    </div>
+                    <button
+                      onClick={() => handleSwitchRole('DEPT_HEAD')}
+                      className={`w-full text-left px-4 py-3 hover:bg-slate-50 transition-all flex items-center gap-3 ${currentRoleKey === 'DEPT_HEAD' ? 'bg-blue-50 border-l-2 border-blue-500' : ''}`}
+                    >
+                      <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <ShieldCheck size={16} className="text-blue-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-slate-900">Department Head</p>
+                        <p className="text-[10px] text-slate-500">Team management, full analytics, admin controls</p>
+                      </div>
+                    </button>
+                    <button
+                      onClick={() => handleSwitchRole('SURVEYOR')}
+                      className={`w-full text-left px-4 py-3 hover:bg-slate-50 transition-all flex items-center gap-3 ${currentRoleKey === 'SURVEYOR' ? 'bg-blue-50 border-l-2 border-blue-500' : ''}`}
+                    >
+                      <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <Users size={16} className="text-emerald-600" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-bold text-slate-900">Surveyor</p>
+                        <p className="text-[10px] text-slate-500">Personal dashboard, own projects only</p>
+                      </div>
+                    </button>
+                  </div>
+                )}
+              </div>
+              <button
+                onClick={() => setDemoBannerDismissed(true)}
+                className="text-white/80 hover:text-white text-lg font-bold leading-none px-1"
+                title="Dismiss banner"
+              >
+                &times;
+              </button>
+            </div>
+          </div>
+        )}
         {currentPage === 'dashboard' && (
           <DashboardPage 
             store={store} 
