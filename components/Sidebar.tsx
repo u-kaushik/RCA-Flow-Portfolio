@@ -159,9 +159,9 @@ const Sidebar: React.FC<SidebarProps> = ({
       lg:relative lg:translate-x-0 lg:z-30
       ${collapsed ? 'lg:w-0 lg:border-r-0 lg:-translate-x-full' : ''}
     `}>
-      {/* Demo Mode Sidebar Indicator */}
+      {/* Demo Mode Sidebar Indicator - mobile only */}
       {DEMO_MODE && (
-        <div className="mx-4 mt-4 mb-0 px-3 py-2 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center gap-2">
+        <div className="mx-4 mt-4 mb-0 px-3 py-2 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center gap-2 lg:hidden">
           <Eye size={12} className="text-amber-400 shrink-0" />
           <span className="text-[9px] font-bold uppercase tracking-widest text-amber-400">Demo Mode</span>
           <div className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
