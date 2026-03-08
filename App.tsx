@@ -12,7 +12,7 @@ import Sidebar from './components/Sidebar';
 import ProjectManagementModal from './components/ProjectManagementModal';
 import DeleteConfirmationModal from './components/DeleteConfirmationModal';
 import { Development, Block, UserRole } from './types';
-import { Eye, ShieldCheck, Users, ChevronDown, Menu } from 'lucide-react';
+import { Eye, ShieldCheck, Users, ChevronDown, Menu, PanelLeftOpen } from 'lucide-react';
 
 const App: React.FC = () => {
   const store = useStore();
@@ -35,6 +35,7 @@ const App: React.FC = () => {
 
   // Mobile sidebar state
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     const handleGlobalClick = () => {
@@ -119,21 +120,14 @@ const App: React.FC = () => {
         onDuplicateDevelopment={(id) => { store.duplicateDevelopment(id); setActiveMenuId(null); }}
         mobileOpen={mobileSidebarOpen}
         onMobileClose={() => setMobileSidebarOpen(false)}
+        collapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
 
       <main className="flex-1 overflow-auto h-screen relative min-w-0">
-        {/* Mobile Header */}
-        {!mobileSidebarOpen && <div className="lg:hidden sticky top-0 z-50 bg-slate-900 text-white px-4 py-3 flex items-center gap-3 shadow-lg">
-          <button onClick={() => setMobileSidebarOpen(true)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
-            <Menu size={22} />
-          </button>
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold italic text-sm shadow-lg shadow-blue-900/40">R</div>
-          <span className="font-bold text-sm tracking-tight">RCA Wizard</span>
-        </div>}
-
-        {/* Demo Mode Banner */}
+        {/* Demo Mode Banner - pinned at very top */}
         {DEMO_MODE && !demoBannerDismissed && (
-          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between z-50 relative shadow-lg">
+          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between z-50 relative shadow-lg sticky top-0">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-center min-w-0">
               <Eye size={14} className="shrink-0" />
               <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest whitespace-nowrap">Demo Mode</span>
@@ -147,7 +141,7 @@ const App: React.FC = () => {
                   className="flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl px-3 py-1.5 transition-all border border-white/30"
                 >
                   {currentRoleKey === 'DEPT_HEAD' ? <ShieldCheck size={14} /> : <Users size={14} />}
-                  <span className="text-[10px] font-bold uppercase tracking-wider">
+                  <span className="text-[10px] font-bold uppercase tracking-wider hidden sm:inline">
                     {currentRoleKey === 'DEPT_HEAD' ? 'Dept Head' : 'Surveyor'}
                   </span>
                   <ChevronDown size={12} className={`transition-transform ${roleDropdownOpen ? 'rotate-180' : ''}`} />
@@ -193,6 +187,26 @@ const App: React.FC = () => {
               </button>
             </div>
           </div>
+        )}
+
+        {/* Mobile Header */}
+        {!mobileSidebarOpen && <div className={`lg:hidden sticky ${DEMO_MODE && !demoBannerDismissed ? 'top-[41px]' : 'top-0'} z-50 bg-slate-900 text-white px-4 py-3 flex items-center gap-3 shadow-lg`}>
+          <button onClick={() => setMobileSidebarOpen(true)} className="p-2 hover:bg-slate-800 rounded-xl transition-colors">
+            <Menu size={22} />
+          </button>
+          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold italic text-sm shadow-lg shadow-blue-900/40">R</div>
+          <span className="font-bold text-sm tracking-tight">RCA Wizard</span>
+        </div>}
+
+        {/* Desktop sidebar expand button (when collapsed) */}
+        {sidebarCollapsed && (
+          <button
+            onClick={() => setSidebarCollapsed(false)}
+            className="hidden lg:flex fixed top-4 left-4 z-50 items-center gap-2 bg-slate-900 text-white px-3 py-2.5 rounded-xl shadow-xl hover:bg-slate-800 transition-all border border-slate-700"
+            title="Expand sidebar"
+          >
+            <PanelLeftOpen size={18} />
+          </button>
         )}
         {currentPage === 'dashboard' && (
           <DashboardPage 

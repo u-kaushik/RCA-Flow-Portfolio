@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LayoutDashboard, Settings, LogOut, Building2, Box, FileText, ChevronDown, ChevronRight, MoreVertical, Archive, Trash2, Edit3, Star, Copy, CheckCircle2, GripVertical, BarChart3, Hammer, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Settings, LogOut, Building2, Box, FileText, ChevronDown, ChevronRight, MoreVertical, Archive, Trash2, Edit3, Star, Copy, CheckCircle2, GripVertical, BarChart3, Hammer, Menu, X, PanelLeftClose, Eye } from 'lucide-react';
 import { User, Development, Block, UserRole } from '../types';
+import { DEMO_MODE } from '../store';
 
 interface SidebarProps {
   activePage: string;
@@ -24,6 +25,8 @@ interface SidebarProps {
   setActiveMenuId: (id: string | null) => void;
   mobileOpen?: boolean;
   onMobileClose?: () => void;
+  collapsed?: boolean;
+  onToggleCollapse?: () => void;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -46,7 +49,9 @@ const Sidebar: React.FC<SidebarProps> = ({
   activeMenuId,
   setActiveMenuId,
   mobileOpen,
-  onMobileClose
+  onMobileClose,
+  collapsed,
+  onToggleCollapse
 }) => {
   const [expandedDevId, setExpandedDevId] = useState<string | null>(activeDevelopment?.id || null);
   const [menuPos, setMenuPos] = useState({ top: 0, left: 0 });
@@ -107,6 +112,14 @@ const Sidebar: React.FC<SidebarProps> = ({
   };
 
   const closeMobile = () => onMobileClose?.();
+  const handleCollapse = () => {
+    // On mobile, close the drawer; on desktop, toggle collapse
+    if (window.innerWidth < 1024) {
+      closeMobile();
+    } else {
+      onToggleCollapse?.();
+    }
+  };
 
   const handleNavigate = (page: any) => {
     onNavigate(page);
@@ -141,11 +154,21 @@ const Sidebar: React.FC<SidebarProps> = ({
 
     <aside className={`
       bg-slate-900 text-white flex flex-col border-r border-slate-800 shrink-0 font-inter overflow-x-hidden
-      fixed inset-y-0 left-0 z-50 w-72 transition-transform duration-300 ease-in-out
+      fixed inset-y-0 left-0 z-50 w-72 transition-all duration-300 ease-in-out
       ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
       lg:relative lg:translate-x-0 lg:z-30
+      ${collapsed ? 'lg:w-0 lg:border-r-0 lg:-translate-x-full' : ''}
     `}>
-      <div className="p-8 flex items-start justify-between">
+      {/* Demo Mode Sidebar Indicator */}
+      {DEMO_MODE && (
+        <div className="mx-4 mt-4 mb-0 px-3 py-2 bg-amber-500/10 border border-amber-500/20 rounded-xl flex items-center gap-2">
+          <Eye size={12} className="text-amber-400 shrink-0" />
+          <span className="text-[9px] font-bold uppercase tracking-widest text-amber-400">Demo Mode</span>
+          <div className="ml-auto w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+        </div>
+      )}
+
+      <div className="p-8 pb-4 flex items-start justify-between">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold italic shadow-lg shadow-blue-900/40 shrink-0">R</div>
           <div className="flex flex-col">
@@ -157,8 +180,8 @@ const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
         </div>
-        <button onClick={closeMobile} className="lg:hidden p-2 hover:bg-slate-800 rounded-xl text-slate-400 transition-colors">
-          <X size={20} />
+        <button onClick={handleCollapse} className="p-2 hover:bg-slate-800 rounded-xl text-slate-400 transition-colors" title="Collapse sidebar">
+          <PanelLeftClose size={20} />
         </button>
       </div>
 
