@@ -76,8 +76,8 @@ Full demo environment with sample developments, pre-populated data, and a role s
 
 ```bash
 # Clone the repository
-git clone https://github.com/u-kaushik/rca-flow-portfolio.git
-cd rca-flow-portfolio
+git clone https://github.com/u-kaushik/RCA-Flow-Portfolio.git
+cd RCA-Flow-Portfolio
 
 # Install dependencies
 npm install
