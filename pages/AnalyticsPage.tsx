@@ -26,63 +26,63 @@ const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ store }) => {
   });
 
   return (
-    <div className="p-6 md:p-8 max-w-6xl mx-auto pb-32 font-inter">
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+    <div className="p-4 sm:p-6 md:p-8 max-w-6xl mx-auto pb-32 font-inter">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Intelligence Console</h1>
-          <p className="text-slate-600 mt-1 font-medium text-sm">Tracking departmental throughput and fee generation.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Intelligence Console</h1>
+          <p className="text-slate-600 mt-1 font-medium text-xs sm:text-sm">Tracking departmental throughput and fee generation.</p>
         </div>
 
         {isAdmin && (
-          <div className="flex gap-4 p-1.5 bg-slate-200/50 rounded-2xl w-fit shrink-0">
-            <button onClick={() => setView('department')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${view === 'department' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Department</button>
-            <button onClick={() => setView('personal')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${view === 'personal' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>My Performance</button>
+          <div className="flex gap-2 sm:gap-4 p-1.5 bg-slate-200/50 rounded-2xl w-fit shrink-0">
+            <button onClick={() => setView('department')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${view === 'department' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Department</button>
+            <button onClick={() => setView('personal')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${view === 'personal' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>My Performance</button>
           </div>
         )}
       </header>
 
       {/* Primary KPI Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
-        <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center"><PoundSterling size={24} /></div>
-            <span className="flex items-center gap-1 text-emerald-500 text-xs font-bold"><ArrowUpRight size={14} /> 12%</span>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 mb-8 sm:mb-12">
+        <div className="bg-white p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-200 shadow-sm">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-50 text-blue-600 rounded-xl sm:rounded-2xl flex items-center justify-center"><PoundSterling size={20} /></div>
+            <span className="hidden sm:flex items-center gap-1 text-emerald-500 text-xs font-bold"><ArrowUpRight size={14} /> 12%</span>
           </div>
-          <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Gross Fees Generated</p>
-          <h4 className="text-3xl font-bold text-slate-900">£{(activeView === 'department' ? deptStats.totalFees : personalStats.totalFees).toLocaleString()}</h4>
+          <p className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Gross Fees</p>
+          <h4 className="text-xl sm:text-3xl font-bold text-slate-900">£{(activeView === 'department' ? deptStats.totalFees : personalStats.totalFees).toLocaleString()}</h4>
         </div>
 
-        <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center"><FileBox size={24} /></div>
-            <span className="flex items-center gap-1 text-emerald-500 text-xs font-bold"><ArrowUpRight size={14} /> 4%</span>
+        <div className="bg-white p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-200 shadow-sm">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-emerald-50 text-emerald-600 rounded-xl sm:rounded-2xl flex items-center justify-center"><FileBox size={20} /></div>
+            <span className="hidden sm:flex items-center gap-1 text-emerald-500 text-xs font-bold"><ArrowUpRight size={14} /> 4%</span>
           </div>
-          <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">RCAs Finalized</p>
-          <h4 className="text-3xl font-bold text-slate-900">{activeView === 'department' ? deptStats.totalRCAs : personalStats.finalizedCount}</h4>
+          <p className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">RCAs Finalized</p>
+          <h4 className="text-xl sm:text-3xl font-bold text-slate-900">{activeView === 'department' ? deptStats.totalRCAs : personalStats.finalizedCount}</h4>
         </div>
 
-        <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm">
-          <div className="flex items-center justify-between mb-4">
-            <div className="w-12 h-12 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center"><Zap size={24} /></div>
-            <span className="flex items-center gap-1 text-slate-400 text-xs font-bold">Stable</span>
+        <div className="bg-white p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-200 shadow-sm">
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-amber-50 text-amber-600 rounded-xl sm:rounded-2xl flex items-center justify-center"><Zap size={20} /></div>
+            <span className="hidden sm:flex items-center gap-1 text-slate-400 text-xs font-bold">Stable</span>
           </div>
-          <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Avg. Throughput</p>
-          <h4 className="text-3xl font-bold text-slate-900">{activeView === 'department' ? '4.2d' : '3.8d'}</h4>
+          <p className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Avg. Throughput</p>
+          <h4 className="text-xl sm:text-3xl font-bold text-slate-900">{activeView === 'department' ? '4.2d' : '3.8d'}</h4>
         </div>
 
-        <div className="bg-slate-900 p-8 rounded-[2.5rem] border border-slate-800 shadow-2xl relative overflow-hidden">
+        <div className="bg-slate-900 p-4 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-800 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600 rounded-full blur-[80px] opacity-20 -mr-16 -mt-16"></div>
           <div className="relative z-10">
-            <div className="flex items-center justify-between mb-4 text-white">
-              <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center"><Users size={24} /></div>
+            <div className="flex items-center justify-between mb-3 sm:mb-4 text-white">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/10 rounded-xl sm:rounded-2xl flex items-center justify-center"><Users size={20} /></div>
             </div>
-            <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Active Team Members</p>
-            <h4 className="text-3xl font-bold text-white">{deptStats.memberCount} Surveyors</h4>
+            <p className="text-[9px] sm:text-[10px] font-semibold text-slate-500 uppercase tracking-widest mb-1">Team Members</p>
+            <h4 className="text-xl sm:text-3xl font-bold text-white">{deptStats.memberCount}</h4>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-8">
         <div className="lg:col-span-2 space-y-8">
           <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden">
             <div className="px-10 py-8 border-b border-slate-100 space-y-6">

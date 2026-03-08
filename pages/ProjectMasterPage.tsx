@@ -189,29 +189,29 @@ const ProjectMasterPage: React.FC<ProjectMasterPageProps> = ({
   return (
     <div className="flex flex-col h-full bg-slate-50/50 font-inter relative">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm backdrop-blur-md bg-white/80">
-        <div className="flex items-center gap-5">
-          <button onClick={onBack} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-500 transition-all border border-slate-200">
-            <ChevronLeft size={22} />
+      <div className="bg-white border-b border-slate-200 px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm backdrop-blur-md bg-white/80">
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <button onClick={onBack} className="p-2 sm:p-2.5 hover:bg-slate-100 rounded-xl text-slate-500 transition-all border border-slate-200 shrink-0">
+            <ChevronLeft size={20} />
           </button>
-          <div className="flex flex-col">
-            <div className="flex items-center gap-3">
-              <h1 className="text-xl font-bold text-slate-900 tracking-tight">{development.name}</h1>
-              <button 
+          <div className="flex flex-col min-w-0">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <h1 className="text-base sm:text-xl font-bold text-slate-900 tracking-tight truncate">{development.name}</h1>
+              <button
                 onClick={(e) => { e.stopPropagation(); onToggleFavourite(development.id); }}
-                className={`transition-all p-1.5 rounded-xl ${development.isFavourite ? 'text-amber-500 bg-amber-50 shadow-sm border border-amber-100' : 'text-slate-300 hover:text-amber-500 hover:bg-amber-50'}`}
+                className={`transition-all p-1 sm:p-1.5 rounded-xl shrink-0 ${development.isFavourite ? 'text-amber-500 bg-amber-50 shadow-sm border border-amber-100' : 'text-slate-300 hover:text-amber-500 hover:bg-amber-50'}`}
                 title={development.isFavourite ? "Remove from Favourites" : "Add to Favourites"}
               >
-                <Star size={20} fill={development.isFavourite ? "currentColor" : "none"} />
+                <Star size={18} fill={development.isFavourite ? "currentColor" : "none"} />
               </button>
             </div>
-            <div className="flex items-center gap-3 text-[11px] font-semibold text-slate-400 uppercase tracking-widest mt-0.5">
+            <div className="hidden sm:flex items-center gap-3 text-[11px] font-semibold text-slate-400 uppercase tracking-widest mt-0.5">
               <span>Scheme Number: {development.reference} • Registered: {formatDateLong(development.createdAt)}</span>
             </div>
           </div>
         </div>
-        
-        <div className="flex items-center gap-6">
+
+        <div className="flex items-center gap-3 sm:gap-6 shrink-0">
           <div className="hidden sm:flex items-center gap-2 border-r border-slate-200 pr-6 mr-2 relative">
             <div className="flex items-center gap-2">
               <button 
@@ -268,46 +268,46 @@ const ProjectMasterPage: React.FC<ProjectMasterPageProps> = ({
               </div>
             </div>
           </div>
-          <div className="bg-slate-900 px-4 py-2 rounded-xl text-right flex items-center gap-4 shadow-lg shadow-slate-200">
-             <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500">Global RCA</p>
-             <p className="text-md font-bold text-blue-400">£{formatNumber(totalDevRCA)}</p>
+          <div className="bg-slate-900 px-3 sm:px-4 py-2 rounded-xl text-right flex items-center gap-2 sm:gap-4 shadow-lg shadow-slate-200">
+             <p className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-widest text-slate-500 hidden sm:block">Global RCA</p>
+             <p className="text-sm sm:text-md font-bold text-blue-400">£{formatNumber(totalDevRCA)}</p>
           </div>
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto custom-scrollbar p-8 max-w-6xl mx-auto w-full space-y-10 pb-24">
+      <div className="flex-1 overflow-auto custom-scrollbar p-4 sm:p-8 max-w-6xl mx-auto w-full space-y-6 sm:space-y-10 pb-24">
         {/* Project KPI HUD */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-           <div className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Building Assets</p>
-              <div className="flex items-center gap-3">
-                 <Building2 size={20} className="text-blue-600" />
-                 <h4 className="text-2xl font-bold text-slate-900">{blocks.length} Blocks</h4>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
+           <div className="bg-white p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] border border-slate-200 shadow-sm">
+              <p className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Building Assets</p>
+              <div className="flex items-center gap-2 sm:gap-3">
+                 <Building2 size={18} className="text-blue-600 shrink-0" />
+                 <h4 className="text-lg sm:text-2xl font-bold text-slate-900">{blocks.length} Blocks</h4>
               </div>
               <ProgressBar current={completedBlocksCount} total={blocks.length} />
            </div>
 
-           <div className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Site Externals</p>
-              <div className="flex items-center gap-3">
-                 <Hammer size={20} className="text-emerald-600" />
-                 <h4 className="text-2xl font-bold text-slate-900">{isExternalsComplete ? 'Finalized' : 'Draft'}</h4>
+           <div className="bg-white p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] border border-slate-200 shadow-sm">
+              <p className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Site Externals</p>
+              <div className="flex items-center gap-2 sm:gap-3">
+                 <Hammer size={18} className="text-emerald-600 shrink-0" />
+                 <h4 className="text-lg sm:text-2xl font-bold text-slate-900">{isExternalsComplete ? 'Finalized' : 'Draft'}</h4>
               </div>
               <ProgressBar current={isExternalsComplete ? 1 : 0} total={1} color="emerald" />
            </div>
 
-           <div className="bg-white p-8 rounded-[2rem] border border-slate-200 shadow-sm">
-              <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Internal Dept Fee</p>
-              <div className="flex items-center gap-3">
-                 <PoundSterling size={20} className="text-blue-500" />
-                 <h4 className="text-2xl font-bold text-slate-900">£{(development.rcaFee || 0).toLocaleString()}</h4>
+           <div className="bg-white p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] border border-slate-200 shadow-sm">
+              <p className="text-[9px] sm:text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Internal Dept Fee</p>
+              <div className="flex items-center gap-2 sm:gap-3">
+                 <PoundSterling size={18} className="text-blue-500 shrink-0" />
+                 <h4 className="text-lg sm:text-2xl font-bold text-slate-900">£{(development.rcaFee || 0).toLocaleString()}</h4>
               </div>
            </div>
 
-           <div className="bg-blue-600 p-8 rounded-[2rem] shadow-xl shadow-blue-100 flex flex-col justify-center relative overflow-hidden">
+           <div className="bg-blue-600 p-4 sm:p-8 rounded-2xl sm:rounded-[2rem] shadow-xl shadow-blue-100 flex flex-col justify-center relative overflow-hidden">
               <div className="absolute top-0 right-0 w-24 h-24 bg-white/10 rounded-full -mr-12 -mt-12"></div>
-              <p className="text-[10px] font-semibold text-blue-100 uppercase tracking-widest mb-1 relative z-10">Project Maturity</p>
-              <h4 className="text-2xl font-bold text-white relative z-10">
+              <p className="text-[9px] sm:text-[10px] font-semibold text-blue-100 uppercase tracking-widest mb-1 relative z-10">Project Maturity</p>
+              <h4 className="text-lg sm:text-2xl font-bold text-white relative z-10">
                 {maturityPercent}% Complete
               </h4>
               <div className="relative z-10 mt-1">
@@ -317,22 +317,22 @@ const ProjectMasterPage: React.FC<ProjectMasterPageProps> = ({
         </div>
 
         {/* Tab Controls */}
-        <div className="flex items-center justify-between">
-          <div className="flex gap-4 p-1 bg-slate-200/50 rounded-2xl w-fit">
-            <button onClick={() => setActiveTab('summary')} className={`px-8 py-2.5 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'summary' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>Summary & Blocks</button>
-            <button onClick={() => setActiveTab('docs')} className={`px-8 py-2.5 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'docs' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>Documents ({development.documents?.length || 0})</button>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+          <div className="flex gap-2 sm:gap-4 p-1 bg-slate-200/50 rounded-2xl w-fit">
+            <button onClick={() => setActiveTab('summary')} className={`px-4 sm:px-8 py-2.5 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'summary' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>Summary & Blocks</button>
+            <button onClick={() => setActiveTab('docs')} className={`px-4 sm:px-8 py-2.5 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'docs' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500 hover:text-slate-700'}`}>Documents ({development.documents?.length || 0})</button>
           </div>
-          
+
           {activeTab === 'summary' && (
-            <button 
+            <button
               onClick={handleGenerateReport}
               disabled={isPackaging || !isProjectComplete || alreadyInStaging}
-              className={`flex items-center gap-3 px-8 py-3 rounded-2xl font-semibold uppercase text-[11px] tracking-widest transition-all shadow-xl ${
+              className={`flex items-center gap-2 sm:gap-3 px-4 sm:px-8 py-2.5 sm:py-3 rounded-2xl font-semibold uppercase text-[10px] sm:text-[11px] tracking-widest transition-all shadow-xl w-full sm:w-auto justify-center ${
                 alreadyInStaging ? 'bg-emerald-500 text-white shadow-emerald-100' :
                 isProjectComplete ? 'bg-slate-900 text-white hover:bg-blue-600 shadow-slate-200' : 'bg-slate-200 text-slate-400 cursor-not-allowed shadow-none'
               }`}
             >
-              {isPackaging ? <Loader2 size={16} className="animate-spin" /> : 
+              {isPackaging ? <Loader2 size={16} className="animate-spin" /> :
                alreadyInStaging ? <><CheckCircle2 size={16} /> Asset In Staging</> :
                isProjectComplete ? <><FileText size={16} /> Finalize & Imprint</> : <><Lock size={16} /> Complete Sections to Finalize</>}
             </button>
@@ -349,7 +349,7 @@ const ProjectMasterPage: React.FC<ProjectMasterPageProps> = ({
                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">{completedBlocksCount + (isExternalsComplete ? 1 : 0)} of {blocks.length + 1} Verified</span>
                 </div>
                 
-                <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" : "space-y-4"}>
+                <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6" : "space-y-4"}>
                   {/* Shared Site Externals Item styled as a Block */}
                   <div 
                     onClick={() => onSelectExternals(development.externalsAssessment)}
@@ -444,8 +444,8 @@ const ProjectMasterPage: React.FC<ProjectMasterPageProps> = ({
               </div>
 
               {/* Summary Stats Row */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10">
-                 <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 mt-6 sm:mt-10">
+                 <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-200 shadow-sm space-y-4 sm:space-y-6">
                     <h4 className="text-[11px] font-semibold text-slate-900 uppercase tracking-widest flex items-center gap-2">
                       <Database size={16} className="text-blue-500" /> Valuation Overview
                     </h4>
@@ -465,7 +465,7 @@ const ProjectMasterPage: React.FC<ProjectMasterPageProps> = ({
                     </div>
                  </div>
 
-                 <div className="bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-sm flex flex-col justify-center">
+                 <div className="bg-white p-5 sm:p-8 rounded-2xl sm:rounded-[2.5rem] border border-slate-200 shadow-sm flex flex-col justify-center">
                     <h4 className="text-[11px] font-semibold text-slate-900 uppercase tracking-widest flex items-center gap-2 mb-6">
                       <ShieldCheck size={16} className="text-blue-500" /> Administrative Logic
                     </h4>

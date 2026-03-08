@@ -134,37 +134,37 @@ const ReportsPage: React.FC<ReportsPageProps> = ({ store, activeMenuId, setActiv
   })();
 
   return (
-    <div className="p-6 md:p-8 max-w-6xl mx-auto pb-32 font-inter">
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+    <div className="p-4 sm:p-6 md:p-8 max-w-6xl mx-auto pb-32 font-inter">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Report Center</h1>
-          <p className="text-slate-600 mt-1 font-medium text-sm">Stage, review, and manage high-fidelity RCA reports.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Report Center</h1>
+          <p className="text-slate-600 mt-1 font-medium text-xs sm:text-sm">Stage, review, and manage high-fidelity RCA reports.</p>
         </div>
 
-        <div className="flex gap-4 p-1.5 bg-slate-200/50 rounded-2xl w-fit shrink-0">
-          <button onClick={() => setActiveTab('staging')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'staging' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>In Progress</button>
-          <button onClick={() => setActiveTab('finalized')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'finalized' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Finalized</button>
-          <button onClick={() => setActiveTab('templates')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'templates' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Library</button>
+        <div className="flex gap-2 sm:gap-4 p-1.5 bg-slate-200/50 rounded-2xl w-fit shrink-0 overflow-x-auto">
+          <button onClick={() => setActiveTab('staging')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'staging' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>In Progress</button>
+          <button onClick={() => setActiveTab('finalized')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'finalized' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Finalized</button>
+          <button onClick={() => setActiveTab('templates')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'templates' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Library</button>
         </div>
       </header>
 
       <div className="flex justify-end mb-4 px-2">
         {activeTab === 'templates' ? (
-          <button onClick={() => setIsUploadModalOpen(true)} className="bg-slate-900 text-white px-8 py-3 rounded-2xl font-semibold uppercase text-[11px] tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 flex items-center gap-3"><Plus size={18} /> Register Template</button>
+          <button onClick={() => setIsUploadModalOpen(true)} className="bg-slate-900 text-white px-4 sm:px-8 py-3 rounded-2xl font-semibold uppercase text-[10px] sm:text-[11px] tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 flex items-center gap-2 sm:gap-3"><Plus size={16} /> <span className="hidden sm:inline">Register</span> Template</button>
         ) : activeTab === 'staging' ? (
-          <button onClick={() => reportFileInputRef.current?.click()} className="bg-slate-900 text-white px-8 py-3 rounded-2xl font-semibold uppercase text-[11px] tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 flex items-center gap-3"><Upload size={18} /> Import Report</button>
+          <button onClick={() => reportFileInputRef.current?.click()} className="bg-slate-900 text-white px-4 sm:px-8 py-3 rounded-2xl font-semibold uppercase text-[10px] sm:text-[11px] tracking-widest hover:bg-blue-600 transition-all shadow-xl shadow-slate-200 flex items-center gap-2 sm:gap-3"><Upload size={16} /> <span className="hidden sm:inline">Import</span> Report</button>
         ) : null}
         <input type="file" ref={reportFileInputRef} onChange={(e) => { const f = e.target.files?.[0]; if (f) store.addReportFromDoc(f.name); }} className="hidden" accept=".docx" />
       </div>
 
-      <div className="bg-white p-2.5 rounded-[3rem] shadow-sm border border-slate-100 mb-10 flex items-center gap-4">
+      <div className="bg-white p-2.5 rounded-2xl sm:rounded-[3rem] shadow-sm border border-slate-100 mb-6 sm:mb-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
         <div className="flex-1 relative flex items-center px-4">
-          <Search className="text-slate-300 mr-4" size={22} />
+          <Search className="text-slate-300 mr-4 shrink-0" size={20} />
           <input type="text" placeholder={`Search ${activeTab}...`} value={searchTerm} onChange={e => setSearchTerm(e.target.value)} className="w-full bg-transparent border-none outline-none text-slate-900 font-bold text-sm placeholder:text-slate-300" />
         </div>
 
-        <div className="flex items-center gap-3 pr-2 shrink-0">
-          <div className="relative">
+        <div className="flex items-center gap-2 sm:gap-3 pr-2 shrink-0 flex-wrap sm:flex-nowrap justify-end">
+          <div className="relative hidden sm:block">
             <Filter className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" size={16} />
             <select value={sortBy} onChange={(e) => setSortBy(e.target.value as SortOption)} className="appearance-none bg-slate-50/50 border border-slate-100/50 rounded-[2rem] py-3 pl-14 pr-12 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-600 focus:ring-4 focus:ring-blue-500/10 outline-none cursor-pointer transition-all min-w-[210px]">
               <option value="newest">Newest First</option>
@@ -175,22 +175,22 @@ const ReportsPage: React.FC<ReportsPageProps> = ({ store, activeMenuId, setActiv
             <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" size={16} />
           </div>
 
-          <button onClick={() => setShowFavouritesOnly(!showFavouritesOnly)} className={`w-12 h-12 flex items-center justify-center rounded-2xl border transition-all ${showFavouritesOnly ? 'bg-amber-50 border-amber-200 text-amber-500 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}><Star size={20} fill={showFavouritesOnly ? "currentColor" : "none"} /></button>
-          <button onClick={() => setShowArchived(!showArchived)} className={`w-12 h-12 flex items-center justify-center rounded-2xl border transition-all ${showArchived ? 'bg-blue-50 border-blue-200 text-blue-600 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}><Archive size={20} /></button>
-          <div className="h-8 w-px bg-slate-100 mx-2" />
-          <div className="flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-[1.5rem]">
+          <button onClick={() => setShowFavouritesOnly(!showFavouritesOnly)} className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl sm:rounded-2xl border transition-all ${showFavouritesOnly ? 'bg-amber-50 border-amber-200 text-amber-500 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}><Star size={18} fill={showFavouritesOnly ? "currentColor" : "none"} /></button>
+          <button onClick={() => setShowArchived(!showArchived)} className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl sm:rounded-2xl border transition-all ${showArchived ? 'bg-blue-50 border-blue-200 text-blue-600 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}><Archive size={18} /></button>
+          <div className="hidden sm:block h-8 w-px bg-slate-100 mx-2" />
+          <div className="hidden sm:flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-[1.5rem]">
             <button onClick={() => setViewMode('grid')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${viewMode === 'grid' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-300 hover:text-slate-50'}`}><Grid size={20} /></button>
             <button onClick={() => setViewMode('list')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${viewMode === 'list' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-300 hover:text-slate-50'}`}><List size={20} /></button>
           </div>
         </div>
       </div>
 
-      <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" : "flex flex-col gap-4"}>
+      <div className={viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8" : "flex flex-col gap-4"}>
         {filteredItems.map((item: any) => {
           const uniqueMenuId = `reports-${item.id}`;
           if (viewMode === 'grid') {
             return (
-              <div key={item.id} className="group bg-white border border-slate-200 rounded-[2.5rem] p-8 hover:border-blue-500 hover:shadow-2xl transition-all relative flex flex-col cursor-pointer">
+              <div key={item.id} className="group bg-white border border-slate-200 rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 hover:border-blue-500 hover:shadow-2xl transition-all relative flex flex-col cursor-pointer">
                 <div className="flex items-center justify-between mb-8">
                   <div className="bg-amber-50 p-3 rounded-2xl border border-amber-100/50 shadow-inner">
                     <Star onClick={(e) => { e.stopPropagation(); activeTab === 'templates' ? store.toggleTemplateFavourite(item.id) : store.toggleReportFavourite(item.id); }} size={24} className={`cursor-pointer transition-all ${item.isFavourite ? 'text-amber-500 fill-amber-500' : 'text-amber-200'}`} />

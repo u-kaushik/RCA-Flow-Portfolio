@@ -52,17 +52,17 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
   };
 
   return (
-    <div className="p-6 md:p-8 max-w-6xl mx-auto pb-32 font-inter">
-      <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
+    <div className="p-4 sm:p-6 md:p-8 max-w-6xl mx-auto pb-32 font-inter">
+      <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 sm:gap-6 mb-8 sm:mb-12">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Calculation Center</h1>
-          <p className="text-slate-600 mt-1 font-medium text-sm">Professional Reinstatement Cost Assessment Management.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight">Calculation Center</h1>
+          <p className="text-slate-600 mt-1 font-medium text-xs sm:text-sm">Professional Reinstatement Cost Assessment Management.</p>
         </div>
 
-        <div className="flex gap-4 p-1.5 bg-slate-200/50 rounded-2xl w-fit shrink-0">
-          <button onClick={() => setActiveTab('active')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'active' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>In Progress</button>
-          <button onClick={() => setActiveTab('completed')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'completed' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Finalized</button>
-          <button onClick={() => setActiveTab('library')} className={`px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all ${activeTab === 'library' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Library</button>
+        <div className="flex gap-2 sm:gap-4 p-1.5 bg-slate-200/50 rounded-2xl w-fit shrink-0 overflow-x-auto">
+          <button onClick={() => setActiveTab('active')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'active' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>In Progress</button>
+          <button onClick={() => setActiveTab('completed')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'completed' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Finalized</button>
+          <button onClick={() => setActiveTab('library')} className={`px-3 sm:px-6 py-2 rounded-xl font-semibold text-[10px] uppercase tracking-widest transition-all whitespace-nowrap ${activeTab === 'library' ? 'bg-white text-blue-600 shadow-sm' : 'text-slate-500'}`}>Library</button>
         </div>
       </header>
 
@@ -75,11 +75,11 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
         </button>
       </div>
 
-      <div className="bg-white p-2.5 rounded-[3rem] shadow-sm border border-slate-100 mb-10 flex items-center gap-4">
+      <div className="bg-white p-2.5 rounded-2xl sm:rounded-[3rem] shadow-sm border border-slate-100 mb-6 sm:mb-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
         <div className="flex-1 relative flex items-center px-4">
-          <Search className="text-slate-300 mr-4" size={22} />
-          <input 
-            type="text" 
+          <Search className="text-slate-300 mr-4 shrink-0" size={20} />
+          <input
+            type="text"
             placeholder="Search developments..."
             value={store.searchTerm}
             onChange={e => store.setSearchTerm(e.target.value)}
@@ -87,10 +87,10 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
           />
         </div>
 
-        <div className="flex items-center gap-3 pr-2 shrink-0">
-          <div className="relative">
+        <div className="flex items-center gap-2 sm:gap-3 pr-2 shrink-0 flex-wrap sm:flex-nowrap justify-end">
+          <div className="relative hidden sm:block">
             <Filter className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" size={16} />
-            <select 
+            <select
               value={store.sortBy}
               onChange={(e) => store.setSortBy(e.target.value as SortOption)}
               className="appearance-none bg-slate-50/50 border border-slate-100/50 rounded-[2rem] py-3 pl-14 pr-12 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-600 focus:ring-4 focus:ring-blue-500/10 outline-none cursor-pointer transition-all min-w-[210px]"
@@ -103,30 +103,30 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
             <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 pointer-events-none" size={16} />
           </div>
 
-          <button 
+          <button
             onClick={() => setShowFavouritesOnly(!showFavouritesOnly)}
-            className={`w-12 h-12 flex items-center justify-center rounded-2xl border transition-all ${showFavouritesOnly ? 'bg-amber-50 border-amber-200 text-amber-500 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}
+            className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl sm:rounded-2xl border transition-all ${showFavouritesOnly ? 'bg-amber-50 border-amber-200 text-amber-500 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}
           >
-            <Star size={20} fill={showFavouritesOnly ? "currentColor" : "none"} />
+            <Star size={18} fill={showFavouritesOnly ? "currentColor" : "none"} />
           </button>
 
-          <button 
+          <button
             onClick={() => store.setShowArchived(!store.showArchived)}
-            className={`w-12 h-12 flex items-center justify-center rounded-2xl border transition-all ${store.showArchived ? 'bg-blue-50 border-blue-200 text-blue-600 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}
+            className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center rounded-xl sm:rounded-2xl border transition-all ${store.showArchived ? 'bg-blue-50 border-blue-200 text-blue-600 shadow-sm' : 'bg-white border-slate-100 text-slate-300 hover:text-slate-500 hover:bg-slate-50'}`}
           >
-            <Archive size={20} />
+            <Archive size={18} />
           </button>
-          
-          <div className="h-8 w-px bg-slate-100 mx-2" />
-          
-          <div className="flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-[1.5rem]">
+
+          <div className="hidden sm:block h-8 w-px bg-slate-100 mx-2" />
+
+          <div className="hidden sm:flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-[1.5rem]">
             <button onClick={() => store.setViewMode('grid')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${store.viewMode === 'grid' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-300 hover:text-slate-500'}`}><Grid size={20} /></button>
             <button onClick={() => store.setViewMode('list')} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${store.viewMode === 'list' ? 'bg-white shadow-sm text-blue-600' : 'text-slate-300 hover:text-slate-500'}`}><List size={20} /></button>
           </div>
         </div>
       </div>
 
-      <div className={store.viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" : "flex flex-col gap-4"}>
+      <div className={store.viewMode === 'grid' ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8" : "flex flex-col gap-4"}>
         {filteredProjects.map((dev: Development) => {
           const devTotalRCA = dev.blocks.reduce((acc, b) => acc + getBlockEstimatedRCA(b), 0);
           const completedBlocks = dev.blocks.filter(b => b.status === 'Completed').length;
@@ -139,7 +139,7 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
               <div 
                 key={dev.id}
                 onClick={() => onSelectDevelopment(dev)}
-                className="group bg-white border border-slate-200 rounded-[2.5rem] p-8 hover:border-blue-500 hover:shadow-2xl transition-all relative flex flex-col cursor-pointer"
+                className="group bg-white border border-slate-200 rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-8 hover:border-blue-500 hover:shadow-2xl transition-all relative flex flex-col cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-8">
                   <div className="bg-amber-50 p-3 rounded-2xl border border-amber-100/50 shadow-inner">
@@ -217,32 +217,34 @@ const DashboardPage: React.FC<DashboardPageProps> = ({
             );
           } else {
             return (
-              <div key={dev.id} onClick={() => onSelectDevelopment(dev)} className="bg-white border border-slate-200 p-6 rounded-[2rem] hover:border-blue-300 hover:shadow-xl transition-all cursor-pointer flex items-center gap-8 group">
-                <div className="bg-amber-50 p-3 rounded-2xl border border-amber-100/50 shrink-0">
+              <div key={dev.id} onClick={() => onSelectDevelopment(dev)} className="bg-white border border-slate-200 p-4 sm:p-6 rounded-2xl sm:rounded-[2rem] hover:border-blue-300 hover:shadow-xl transition-all cursor-pointer flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-8 group">
+                <div className="bg-amber-50 p-3 rounded-2xl border border-amber-100/50 shrink-0 hidden sm:block">
                   <Star onClick={(e) => { e.stopPropagation(); store.toggleFavourite(dev.id); }} size={20} className={dev.isFavourite ? 'text-amber-500 fill-amber-500' : 'text-amber-200'} />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <h3 className="text-lg font-bold text-slate-900 truncate">{dev.name}</h3>
+                    <h3 className="text-base sm:text-lg font-bold text-slate-900 truncate">{dev.name}</h3>
                     {isFullComplete && <CheckCircle2 size={18} className="text-emerald-500 shrink-0" />}
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Scheme No: {dev.reference}</p>
-                    <span className="text-[10px] text-slate-300">•</span>
-                    <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Created: {formatDate(dev.createdAt)}</p>
+                    <span className="text-[10px] text-slate-300 hidden sm:inline">•</span>
+                    <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest hidden sm:block">Created: {formatDate(dev.createdAt)}</p>
                   </div>
                 </div>
-                <div className="w-24 shrink-0">
-                   <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-0.5 text-center">Blocks</p>
-                   <p className="text-sm font-semibold text-slate-700 text-center">{completedBlocks}/{dev.blocks.length}</p>
-                </div>
-                <div className="w-32 shrink-0">
-                   <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-0.5 text-center">Internal Fee</p>
-                   <p className="text-xs font-bold text-blue-600 text-center">£{(dev.rcaFee || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
-                </div>
-                <div className="w-48 shrink-0">
-                   <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-0.5 text-right">Global Valuation</p>
-                   <p className="text-lg font-bold text-slate-900 text-right">£{devTotalRCA.toLocaleString()}</p>
+                <div className="flex items-center gap-4 sm:gap-8 sm:contents">
+                  <div className="sm:w-24 shrink-0">
+                     <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-0.5">Blocks</p>
+                     <p className="text-sm font-semibold text-slate-700">{completedBlocks}/{dev.blocks.length}</p>
+                  </div>
+                  <div className="hidden md:block w-32 shrink-0">
+                     <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-0.5 text-center">Internal Fee</p>
+                     <p className="text-xs font-bold text-blue-600 text-center">£{(dev.rcaFee || 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}</p>
+                  </div>
+                  <div className="shrink-0 ml-auto sm:w-48">
+                     <p className="text-[9px] font-semibold text-slate-400 uppercase tracking-widest mb-0.5 text-right">Global Valuation</p>
+                     <p className="text-base sm:text-lg font-bold text-slate-900 text-right">£{devTotalRCA.toLocaleString()}</p>
+                  </div>
                 </div>
                 <div className="relative">
                   <button 

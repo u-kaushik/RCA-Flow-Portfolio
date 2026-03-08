@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { LayoutDashboard, Settings, LogOut, Building2, Box, FileText, ChevronDown, ChevronRight, MoreVertical, Archive, Trash2, Edit3, Star, Copy, CheckCircle2, GripVertical, BarChart3, Hammer } from 'lucide-react';
+import { LayoutDashboard, Settings, LogOut, Building2, Box, FileText, ChevronDown, ChevronRight, MoreVertical, Archive, Trash2, Edit3, Star, Copy, CheckCircle2, GripVertical, BarChart3, Hammer, Menu, X } from 'lucide-react';
 import { User, Development, Block, UserRole } from '../types';
 
 interface SidebarProps {
@@ -22,14 +22,16 @@ interface SidebarProps {
   onLogout: () => void;
   activeMenuId: string | null;
   setActiveMenuId: (id: string | null) => void;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ 
-  activePage, 
-  activeDevelopment, 
-  activeBlock, 
+const Sidebar: React.FC<SidebarProps> = ({
+  activePage,
+  activeDevelopment,
+  activeBlock,
   developments,
-  onNavigate, 
+  onNavigate,
   onSelectDevelopment,
   onSelectBlock,
   onSelectExternals,
@@ -39,10 +41,12 @@ const Sidebar: React.FC<SidebarProps> = ({
   onDeleteDevelopment,
   onToggleFavourite,
   onUpdateDevelopment,
-  user, 
+  user,
   onLogout,
   activeMenuId,
-  setActiveMenuId
+  setActiveMenuId,
+  mobileOpen,
+  onMobileClose
 }) => {
   const [expandedDevId, setExpandedDevId] = useState<string | null>(activeDevelopment?.id || null);
   const [menuPos, setMenuPos] = useState({ top: 0, left: 0 });
@@ -102,8 +106,45 @@ const Sidebar: React.FC<SidebarProps> = ({
     setDraggedBlockId(null);
   };
 
+  const closeMobile = () => onMobileClose?.();
+
+  const handleNavigate = (page: any) => {
+    onNavigate(page);
+    closeMobile();
+  };
+
+  const handleSelectDev = (dev: Development) => {
+    onSelectDevelopment(dev);
+    setExpandedDevId(dev.id);
+    closeMobile();
+  };
+
+  const handleSelectBlock = (dev: Development, block: Block) => {
+    onSelectBlock(dev, block);
+    closeMobile();
+  };
+
+  const handleSelectExternals = (dev: Development) => {
+    onSelectExternals(dev);
+    closeMobile();
+  };
+
   return (
-    <aside className="w-72 bg-slate-900 text-white flex flex-col border-r border-slate-800 shrink-0 relative z-30 font-inter overflow-x-hidden">
+    <>
+      {/* Mobile overlay backdrop */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
+          onClick={closeMobile}
+        />
+      )}
+
+    <aside className={`
+      bg-slate-900 text-white flex flex-col border-r border-slate-800 shrink-0 font-inter overflow-x-hidden
+      fixed inset-y-0 left-0 z-50 w-72 transition-transform duration-300 ease-in-out
+      ${mobileOpen ? 'translate-x-0' : '-translate-x-full'}
+      lg:relative lg:translate-x-0 lg:z-30
+    `}>
       <div className="p-8 flex items-start justify-between">
         <div className="flex items-center gap-4">
           <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center font-bold italic shadow-lg shadow-blue-900/40 shrink-0">R</div>
@@ -116,12 +157,15 @@ const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
         </div>
+        <button onClick={closeMobile} className="lg:hidden p-2 hover:bg-slate-800 rounded-xl text-slate-400 transition-colors">
+          <X size={20} />
+        </button>
       </div>
 
       <nav className="flex-1 px-4 mt-2 space-y-1 overflow-y-auto custom-scrollbar pb-6">
         <div className="space-y-1">
           <button
-            onClick={() => onNavigate('dashboard')}
+            onClick={() => handleNavigate('dashboard')}
             className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all ${
               activePage === 'dashboard' ? 'bg-blue-600 text-white shadow-xl' : 'text-slate-400 hover:bg-slate-800'
             }`}
@@ -131,7 +175,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
 
           <button
-            onClick={() => onNavigate('analytics')}
+            onClick={() => handleNavigate('analytics')}
             className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all ${
               activePage === 'analytics' ? 'bg-blue-600 text-white shadow-xl' : 'text-slate-400 hover:bg-slate-800'
             }`}
@@ -141,7 +185,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </button>
 
           <button
-            onClick={() => onNavigate('reports')}
+            onClick={() => handleNavigate('reports')}
             className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-xl transition-all ${
               activePage === 'reports' ? 'bg-blue-600 text-white shadow-xl' : 'text-slate-400 hover:bg-slate-800'
             }`}
@@ -163,8 +207,8 @@ const Sidebar: React.FC<SidebarProps> = ({
             return (
               <div key={dev.id} className="space-y-1">
                 <div className={`flex items-center rounded-xl transition-all ${isSelected ? 'bg-slate-800 ring-1 ring-slate-700 shadow-lg' : 'hover:bg-slate-800 group'}`}>
-                  <button 
-                    onClick={() => { onSelectDevelopment(dev); setExpandedDevId(dev.id); }}
+                  <button
+                    onClick={() => handleSelectDev(dev)}
                     className="flex-1 flex items-center gap-3 px-4 py-2.5 min-w-0"
                   >
                     <Building2 size={14} className={isSelected ? 'text-blue-400' : 'text-slate-600 group-hover:text-slate-400'} />
@@ -199,7 +243,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                           <GripVertical size={10} />
                         </div>
                         <button 
-                          onClick={() => onSelectBlock(dev, block)}
+                          onClick={() => handleSelectBlock(dev, block)}
                           className={`flex-1 flex items-center gap-2 px-1 py-1.5 text-left text-[10px] font-semibold transition-colors min-w-0 ${activeBlock?.id === block.id ? 'text-blue-400' : 'text-slate-500 hover:text-slate-200'}`}
                         >
                           <Box size={10} /> 
@@ -213,7 +257,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                           <GripVertical size={10} />
                         </div>
                         <button 
-                          onClick={() => onSelectExternals(dev)}
+                          onClick={() => handleSelectExternals(dev)}
                           className={`flex-1 flex items-center gap-2 px-1 py-1.5 text-left text-[10px] font-semibold transition-colors min-w-0 ${activePage === 'externals' && isSelected ? 'text-emerald-400' : 'text-slate-500 hover:text-slate-200'}`}
                         >
                           <Hammer size={10} /> 
@@ -260,7 +304,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       )}
 
       <div className="mt-auto px-6 pb-6 pt-6 border-t border-slate-800 bg-slate-900/50">
-        <button onClick={() => onNavigate('settings')} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition-all text-slate-500 mb-4">
+        <button onClick={() => handleNavigate('settings')} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-slate-800 transition-all text-slate-500 mb-4">
           <Settings size={18} />
           <span className="font-bold text-sm">Settings</span>
         </button>
@@ -276,6 +320,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         </div>
       </div>
     </aside>
+    </>
   );
 };
 

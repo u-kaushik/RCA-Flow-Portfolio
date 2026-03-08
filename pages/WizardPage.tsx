@@ -275,13 +275,13 @@ const WizardPage: React.FC<{
   return (
     <div className="flex flex-col h-full overflow-hidden bg-slate-50/50 font-inter">
       {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-8 py-4 flex items-center justify-between sticky top-0 z-50 shadow-sm backdrop-blur-md bg-white/80 no-print">
-        <div className="flex items-center gap-5">
-          <button onClick={onBack} className="p-2.5 hover:bg-slate-100 rounded-xl text-slate-500 border border-slate-200"><ChevronLeft size={22} /></button>
-          <div className="flex flex-col"><h2 className="text-xl font-bold text-slate-900 tracking-tight">{block.name}</h2><p className="text-[11px] font-semibold text-slate-400 uppercase tracking-widest">{development.name}</p></div>
+      <div className="bg-white border-b border-slate-200 px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between sticky top-0 z-50 shadow-sm backdrop-blur-md bg-white/80 no-print">
+        <div className="flex items-center gap-3 sm:gap-5 min-w-0">
+          <button onClick={onBack} className="p-2 sm:p-2.5 hover:bg-slate-100 rounded-xl text-slate-500 border border-slate-200 shrink-0"><ChevronLeft size={20} /></button>
+          <div className="flex flex-col min-w-0"><h2 className="text-base sm:text-xl font-bold text-slate-900 tracking-tight truncate">{block.name}</h2><p className="text-[10px] sm:text-[11px] font-semibold text-slate-400 uppercase tracking-widest truncate">{development.name}</p></div>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-200">
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-slate-50 rounded-full border border-slate-200">
              {isSaving ? <><Loader2 size={12} className="text-blue-500 animate-spin" /><span className="text-[12px] font-semibold uppercase text-blue-500 tracking-wider">Syncing</span></> : <><div className="w-1.5 h-1.5 bg-green-500 rounded-full" /><span className="text-[12px] font-semibold uppercase text-slate-500 tracking-wider">Saved</span></>}
           </div>
           <button disabled={!canUndo || isLocked} onClick={onUndo} className="p-2 rounded-xl border text-slate-600 border-slate-200 hover:bg-slate-50 transition-all"><Undo2 size={18} /></button>
@@ -289,29 +289,29 @@ const WizardPage: React.FC<{
       </div>
 
       {/* Anchor Navigation */}
-      <div className="bg-white border-b border-slate-200 flex overflow-x-auto no-scrollbar scroll-smooth sticky top-[73px] z-40 no-print">
+      <div className="bg-white border-b border-slate-200 flex overflow-x-auto no-scrollbar scroll-smooth sticky top-[57px] sm:top-[73px] z-40 no-print">
         {steps.map((step, idx) => (
-          <button key={idx} onClick={() => scrollToSection(idx)} className={`flex-1 min-w-[90px] px-2 py-4 border-b-4 transition-all flex flex-col items-center justify-center gap-1 group ${activeStep === idx ? 'border-blue-600 bg-blue-50/20' : 'border-transparent text-slate-500'}`}>
-            <div className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${ (block.completedSections || []).includes(step.id) ? 'bg-green-600 text-white' : activeStep === idx ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-slate-100 text-slate-400'}`}>
-              {(block.completedSections || []).includes(step.id) ? <CheckCircle2 size={13} /> : React.cloneElement(step.icon as React.ReactElement<any>, { size: 13 })}
+          <button key={idx} onClick={() => scrollToSection(idx)} className={`flex-1 min-w-[60px] sm:min-w-[90px] px-1 sm:px-2 py-3 sm:py-4 border-b-4 transition-all flex flex-col items-center justify-center gap-1 group ${activeStep === idx ? 'border-blue-600 bg-blue-50/20' : 'border-transparent text-slate-500'}`}>
+            <div className={`w-6 h-6 sm:w-7 sm:h-7 rounded-lg flex items-center justify-center transition-all ${ (block.completedSections || []).includes(step.id) ? 'bg-green-600 text-white' : activeStep === idx ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-slate-100 text-slate-400'}`}>
+              {(block.completedSections || []).includes(step.id) ? <CheckCircle2 size={12} /> : React.cloneElement(step.icon as React.ReactElement<any>, { size: 12 })}
             </div>
-            <span className={`text-[9px] font-semibold uppercase tracking-tight ${activeStep === idx ? 'text-slate-900' : 'text-slate-500'}`}>{step.title}</span>
+            <span className={`text-[8px] sm:text-[9px] font-semibold uppercase tracking-tight ${activeStep === idx ? 'text-slate-900' : 'text-slate-500'}`}>{step.title}</span>
           </button>
         ))}
       </div>
 
       {/* Delete Selection Overlay */}
       {totalSelectedCount > 0 && !isLocked && (
-        <div className="fixed bottom-32 left-[calc(144px+50%)] -translate-x-1/2 z-[100] flex justify-center pointer-events-none no-print">
-          <div className="bg-slate-900 text-white px-8 py-4 rounded-3xl shadow-2xl flex items-center gap-8 animate-in slide-in-from-bottom-4 pointer-events-auto border border-slate-700">
-             <div className="flex items-center gap-3">
-                <Trash2 size={18} className="text-blue-400" />
-                <p className="text-sm font-bold uppercase tracking-widest">{totalSelectedCount} Selected</p>
+        <div className="fixed bottom-8 sm:bottom-32 left-1/2 lg:left-[calc(144px+50%)] -translate-x-1/2 z-[100] flex justify-center pointer-events-none no-print w-[calc(100%-2rem)] sm:w-auto">
+          <div className="bg-slate-900 text-white px-4 sm:px-8 py-3 sm:py-4 rounded-2xl sm:rounded-3xl shadow-2xl flex items-center gap-4 sm:gap-8 animate-in slide-in-from-bottom-4 pointer-events-auto border border-slate-700 w-full sm:w-auto justify-between sm:justify-start">
+             <div className="flex items-center gap-2 sm:gap-3">
+                <Trash2 size={16} className="text-blue-400" />
+                <p className="text-xs sm:text-sm font-bold uppercase tracking-widest">{totalSelectedCount} Selected</p>
              </div>
-             <div className="h-8 w-px bg-white/20" />
-             <div className="flex gap-3">
-                <button onClick={() => { setSelectedFloors(new Set()); setSelectedAdjustments(new Set()); setSelectedAnomalies(new Set()); }} className="px-6 py-2 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-colors">Clear</button>
-                <button onClick={() => setShowDeleteWarning(true)} className="px-8 py-2 bg-red-600 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-red-700 shadow-lg shadow-red-900/40 transition-all">Delete Selection</button>
+             <div className="h-8 w-px bg-white/20 hidden sm:block" />
+             <div className="flex gap-2 sm:gap-3">
+                <button onClick={() => { setSelectedFloors(new Set()); setSelectedAdjustments(new Set()); setSelectedAnomalies(new Set()); }} className="px-3 sm:px-6 py-2 rounded-xl text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:bg-white/10 transition-colors">Clear</button>
+                <button onClick={() => setShowDeleteWarning(true)} className="px-4 sm:px-8 py-2 bg-red-600 rounded-xl text-[10px] sm:text-xs font-bold uppercase tracking-widest hover:bg-red-700 shadow-lg shadow-red-900/40 transition-all">Delete</button>
              </div>
           </div>
         </div>
