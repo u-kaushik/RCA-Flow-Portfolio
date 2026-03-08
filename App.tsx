@@ -127,7 +127,7 @@ const App: React.FC = () => {
       <main className="flex-1 overflow-auto h-screen relative min-w-0">
         {/* Demo Mode Banner - pinned at very top */}
         {DEMO_MODE && !demoBannerDismissed && (
-          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between z-50 relative shadow-lg sticky top-0">
+          <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-white px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between z-[200] relative shadow-lg sticky top-0">
             <div className="flex items-center gap-2 sm:gap-3 flex-1 justify-center min-w-0">
               <Eye size={14} className="shrink-0" />
               <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-widest whitespace-nowrap">Demo Mode</span>
@@ -135,6 +135,7 @@ const App: React.FC = () => {
             </div>
             <div className="flex items-center gap-2 sm:gap-3 shrink-0">
               {/* Role Switcher */}
+              <span className="text-[9px] font-medium opacity-75 hidden lg:inline">Try a role →</span>
               <div className="relative" onClick={(e) => e.stopPropagation()}>
                 <button
                   onClick={() => setRoleDropdownOpen(!roleDropdownOpen)}
@@ -147,7 +148,7 @@ const App: React.FC = () => {
                   <ChevronDown size={12} className={`transition-transform ${roleDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 {roleDropdownOpen && (
-                  <div className="absolute right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden w-64 z-[100]">
+                  <div className="absolute right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden w-64 z-[300]">
                     <div className="px-4 py-3 border-b border-slate-100">
                       <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Switch Role</p>
                     </div>
